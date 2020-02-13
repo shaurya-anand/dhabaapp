@@ -10,19 +10,24 @@ function ProfileScreen({navigation}) {
     return(
   <View style={styles.screen}>
       <View style={styles.topcontainer}>
+
        <View style={styles.backicon}>
           <MaterialCommunityIcons.Button name='arrow-left-bold-circle-outline' size={40} color='white' backgroundColor={Colors.primary} onPress={() => navigation.goBack()}/>
       </View>
+      
       <View style={styles.usericon}>
       <MaterialCommunityIcons name='account' size={110} color='white' backgroundColor={Colors.primary}/>
       </View>
+
       </View>
+
       <View>
           <Text style={styles.text}> Name : </Text>
           <Text style={styles.text}> Address : </Text>
       </View>
+
       <View style={styles.editbutton}>
-          <Button title="Edit details" color={Colors.primary} />
+          <Button title="Edit details" color={Colors.primary} onPress={() => navigation.navigate('EditDetailsScreen')} />
       </View>
 
   </View>

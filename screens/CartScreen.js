@@ -28,7 +28,7 @@ function CartScreen({navigation}){
         </View>
 
         <View style={styles.confirmbutton}>
-          <Button title="Confirm Order" color={Colors.primary} />
+          <Button title="Confirm Order" color={Colors.primary} onPress={() => navigation.navigate('OrderConfirmedScreen')}/>
         </View>
 
 

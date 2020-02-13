@@ -11,6 +11,8 @@ import LoginScreen from './screens/LoginScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
+import OrderConfirmedScreen from './screens/OrderConfirmedScreen';
+import EditDetailsScreen from './screens/EditDetailsScreen';
 
 const Stack= createStackNavigator();
 
@@ -20,10 +22,15 @@ export default function App() {
   return (
     <NavigationContainer>
     <Stack.Navigator headerMode='none'>
+    <Stack.Screen name='LoginScreen' component={LoginScreen}/>
+    <Stack.Screen name='InputDetailsScreen' component={InputDetailsScreen}/>
     <Stack.Screen name='HomeScreen' component={HomeScreen}/>
     <Stack.Screen name='OrderHistoryScreen' component={OrderHistoryScreen}/>
     <Stack.Screen name='CartScreen' component={CartScreen}/>
     <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
+    <Stack.Screen name='OrderConfirmedScreen' component={OrderConfirmedScreen}/>
+    <Stack.Screen name='EditDetailsScreen' component={EditDetailsScreen}/>
+    
     </Stack.Navigator>
     </NavigationContainer>
 
