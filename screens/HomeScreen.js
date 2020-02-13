@@ -4,6 +4,7 @@ import Colors from '../constants/Colors';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
+import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
 
 function HomeScreen({navigation}){
 
@@ -11,6 +12,10 @@ function HomeScreen({navigation}){
     <View style={styles.screen}>
      <View style={styles.bar}>
         <Text style={styles.text}>Menu</Text>
+    </View>
+
+    <View style={styles.itemsContainer}>
+             <AddSubtractItemsBar/>
     </View>
 
     <View style={styles.container}>
@@ -57,6 +62,12 @@ const styles= StyleSheet.create({
             bottom:0,
             justifyContent:'space-between',
             paddingHorizontal: 20
+        },
+
+        itemsContainer : {
+            marginTop : 150,
+            justifyContent:"center",
+            alignItems:'center'
         }
 
 });

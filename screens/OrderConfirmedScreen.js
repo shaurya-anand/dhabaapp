@@ -11,7 +11,7 @@ function OrderConfirmedScreen({navigation}){
     <View style={styles.screen}>
         
         <View style={styles.smiley}>
-        <MaterialCommunityIcons.Button name='emoticon-tongue' size={180} color={Colors.primary} backgroundColor='white' />
+        <MaterialCommunityIcons name='emoticon-tongue' size={180} color={Colors.primary} backgroundColor='white' />
         </View>
 
         <View >
