@@ -6,6 +6,7 @@ import {Entypo} from '@expo/vector-icons';
 import { checkForUpdateAsync } from 'expo/build/Updates/Updates';
 
 
+
 function AddSubtractItemsBar(){
 
     const[count,setCount]=useState(0);
@@ -22,22 +23,27 @@ function AddSubtractItemsBar(){
         </View>
    </View>
      );
-      }
 
 
-const styles= StyleSheet.create({
+}
+
+      
+     const styles= StyleSheet.create({
        
-    barContainer : {
-         flexDirection : 'row'
-         },
-    plusButton :
-    {
-        marginLeft:8
-    },
-    counter : {
-        marginTop :6
+        barContainer : {
+             flexDirection : 'row'
+             },
+        plusButton :
+        {
+            marginLeft:8
+        },
+        counter : {
+            marginTop :6,
+        
+        }
+    });
 
-    }
-});
+
+
 
 export default AddSubtractItemsBar;

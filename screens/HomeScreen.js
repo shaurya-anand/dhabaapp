@@ -5,17 +5,23 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
+import ItemsDisplay from '../components/ItemsDisplay'
 
 function HomeScreen({navigation}){
 
     return(
     <View style={styles.screen}>
      <View style={styles.bar}>
-        <Text style={styles.text}>Menu</Text>
+        <Text style={styles.menuText}>Menu</Text>
     </View>
-
-    <View style={styles.itemsContainer}>
-             <AddSubtractItemsBar/>
+    <View style={styles.header}>
+        <Text style={styles.itemsText}> Items </Text>
+        <Text style={styles.priceText}> Price </Text>
+        <Text style={styles.blank}> </Text>
+    </View>
+    
+    <View>
+        <ItemsDisplay/>
     </View>
 
     <View style={styles.container}>
@@ -44,14 +50,46 @@ const styles= StyleSheet.create({
     
         },
     
-        text : {
-            fontSize : 26,
+        menuText : {
+            fontSize : 30,
             fontFamily : 'Roboto',
             color : 'white',
             fontWeight : 'bold',
             paddingTop: 30
             
         },
+
+        
+        itemsText : {
+            fontSize : 20,
+            fontFamily : 'Roboto',
+            color : 'red',
+            fontWeight : 'bold',
+            flex :1,
+            marginLeft : 20
+        },
+
+        
+        priceText : {
+            fontSize : 20,
+            fontFamily : 'Roboto',
+            color : 'red',
+            fontWeight : 'bold',
+            flex :1,
+            marginLeft : 10
+            
+        },
+
+        blank : {
+            fontSize : 20,
+            fontFamily : 'Roboto',
+            color : 'red',
+            fontWeight : 'bold',
+            marginLeft : 15,
+            flex :1
+            
+        },
+
 
         container : {
             flexDirection : 'row',
@@ -64,10 +102,10 @@ const styles= StyleSheet.create({
             paddingHorizontal: 20
         },
 
-        itemsContainer : {
-            marginTop : 150,
-            justifyContent:"center",
-            alignItems:'center'
+        header : {
+            flexDirection : 'row',
+            marginVertical : 10
+           
         }
 
 });
