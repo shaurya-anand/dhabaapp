@@ -16,11 +16,12 @@ import EditDetailsScreen from './screens/EditDetailsScreen';
 
 const Stack= createStackNavigator();
 
-export default function App() {
+export default function App()
   //comment
-
+{
   return (
     <NavigationContainer>
+
     <Stack.Navigator headerMode='none'>
     <Stack.Screen name='LoginScreen' component={LoginScreen}/>
     <Stack.Screen name='InputDetailsScreen' component={InputDetailsScreen}/>
@@ -30,8 +31,8 @@ export default function App() {
     <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
     <Stack.Screen name='OrderConfirmedScreen' component={OrderConfirmedScreen}/>
     <Stack.Screen name='EditDetailsScreen' component={EditDetailsScreen}/>
-    
     </Stack.Navigator>
+
     </NavigationContainer>
 
   );

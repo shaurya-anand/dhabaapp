@@ -5,7 +5,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
-import ItemsDisplay from '../components/ItemsDisplay'
+import ItemsDisplay from '../components/ItemsDisplay';
+import ItemsList from '../components/ItemsList';
 
 function HomeScreen({navigation}){
 
@@ -17,7 +18,7 @@ function HomeScreen({navigation}){
     <View style={styles.header}>
         <Text style={styles.itemsText}> Items </Text>
         <Text style={styles.priceText}> Price </Text>
-        <Text style={styles.blank}> </Text>
+        <Text style={styles.totalText}> Total {'\u20B9'} 101 </Text>
     </View>
     
     <View>
@@ -80,12 +81,13 @@ const styles= StyleSheet.create({
             
         },
 
-        blank : {
+        totalText : {
             fontSize : 20,
             fontFamily : 'Roboto',
-            color : 'red',
+            color : 'white',
             fontWeight : 'bold',
             marginLeft : 15,
+            backgroundColor : Colors.primary,
             flex :1
             
         },
