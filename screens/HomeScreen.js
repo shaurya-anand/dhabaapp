@@ -7,8 +7,12 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
 import ItemsDisplay from '../components/ItemsDisplay';
 import ItemsList from '../components/ItemsList';
+import {useSelector, useDispatch} from 'react-redux'
+import store from '../redux/store'
 
 function HomeScreen({navigation}){
+
+    const cart_total = useSelector(state => state.cart_total)
 
     return(
     <View style={styles.screen}>
@@ -18,7 +22,7 @@ function HomeScreen({navigation}){
     <View style={styles.header}>
         <Text style={styles.itemsText}> Items </Text>
         <Text style={styles.priceText}> Price </Text>
-        <Text style={styles.totalText}> Total {'\u20B9'} 101 </Text>
+        <Text style={styles.totalText}> Total {'\u20B9'} {cart_total} </Text>
     </View>
     
     <View>
@@ -88,7 +92,8 @@ const styles= StyleSheet.create({
             fontWeight : 'bold',
             marginLeft : 15,
             backgroundColor : Colors.primary,
-            flex :1
+            flex :1,
+            borderRadius : 10
             
         },
 

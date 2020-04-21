@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import React,{useState} from 'react';
+import React,{useState, Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import TopMenuBar from './components/TopMenuBar';
 import BottomBar from './components/BottomBar';
@@ -13,13 +13,18 @@ import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderConfirmedScreen from './screens/OrderConfirmedScreen';
 import EditDetailsScreen from './screens/EditDetailsScreen';
+import {Provider} from 'react-redux';
+import store from './redux/store';
+
 
 const Stack= createStackNavigator();
 
-export default function App()
-  //comment
+export default class App extends Component
 {
+  render(){
   return (
+
+    <Provider store={store}>
     <NavigationContainer>
 
     <Stack.Navigator headerMode='none'>
@@ -34,8 +39,10 @@ export default function App()
     </Stack.Navigator>
 
     </NavigationContainer>
+    </Provider>
 
   );
+}
 }
 
 const styles = StyleSheet.create({

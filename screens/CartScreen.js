@@ -1,13 +1,19 @@
 import React from 'react';
-import {StyleSheet,View,Text, Button} from 'react-native';
+import {StyleSheet,View,Text, Button, FlatList} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux'
+import store from '../redux/store'
+
 
 
 function CartScreen({navigation}){
 
+  var cart = useSelector(state => state.cart)
+  var cart_total = useSelector(state => state.cart_total)
+  
     return(
         <View style={styles.screen}>
 
@@ -26,8 +32,44 @@ function CartScreen({navigation}){
         <View>
           <Text  style={styles.text}> Your Plate </Text>
         </View>
+ 
+        <View style = {styles.cartlist}>
+           <FlatList 
+           contentContainerStyle={{ paddingBottom:50 }}
+           keyExtractor={(item) => item.itemid}
+           data={cart}
+           renderItem={({item}) =>
+              ( 
+              
+                
+               <View  style={styles.itemContainer}>
 
-        <View style={styles.confirmbutton}>
+                <View style={styles.nameContainer}>
+                        <Text style={styles.name}>{item.itemname}</Text>
+                </View>
+
+                <View style={styles.quantityContainer}>
+                       <Text style={styles.quantity}>{item.itemquantity}</Text>
+                       <Text style={styles.asterix}>   X   </Text>
+                       <Text style={styles.price}>₹ {item.itemprice} </Text>
+                </View>
+                
+                <View style={styles.subtotalContainer}>
+                <Text style={styles.subtotal}>₹ {item.itemsubtotal}</Text>
+                </View>
+
+                </View>
+                         
+            
+              ) } />
+ 
+        </View>
+
+        <View style= {styles.carttotal}>
+          <Text style = {styles.carttotalText}> Total  ₹ {cart_total} </Text>
+        </View>
+      
+         <View style={styles.confirmbutton}>
           <Button title="Confirm Order" color={Colors.primary} onPress={() => navigation.navigate('OrderConfirmedScreen')}/>
         </View>
 
@@ -77,7 +119,90 @@ const styles= StyleSheet.create({
        screen: {
         flex: 1,
         backgroundColor: '#fff'
-      }
+      },
+
+      itemContainer : {
+        marginTop : 20,
+        flexDirection : 'row',
+        flex : 1,
+        width : '100%',
+        justifyContent: 'space-between'
+       },
+
+       nameContainer : {
+       flex : 3
+       },
+
+       quantityContainer :{
+       flex : 2,
+       flexDirection : 'row',
+       alignItems : "center"
+       },
+    
+       subtotalContainer : {
+       flex : 1,
+       alignItems:"center",
+       backgroundColor : Colors.primary,
+       marginLeft : 10,
+       marginRight : 10,
+       borderRadius : 6
+       },
+          
+       name : {
+       
+        marginLeft : 10,
+        fontFamily : 'serif',
+        fontSize : 16,
+        color : 'black',
+        fontWeight : 'bold'
+        },
+
+          quantity : {
+          color:'black'
+          },
+
+        asterix : {
+         color : Colors.primary,
+         fontSize : 10
+        },
+    
+       price : {
+        
+        color:'black'
+        },
+
+        
+
+          subtotal : {
+            color:'black',
+            alignItems : 'center',
+            color : 'white'
+            },
+
+        cartlist : {
+          height : 300,
+          marginTop : 50,
+          width: '100%'
+        },
+
+        carttotal : {
+
+          marginTop : 30,
+          flexDirection : "row",
+          justifyContent : 'center',
+        },
+
+        carttotalText : {
+      
+          fontSize : 26,
+          color : 'black',
+          borderRadius : 30,
+          borderColor : Colors.primary,
+          borderWidth: 3,
+          paddingHorizontal : 8
+
+        }
+
 });
 
 export default CartScreen;

@@ -14,11 +14,16 @@ function ItemsDisplay(){
            keyExtractor={(item) => item.id}
            data={ItemsList.list}
            renderItem={({item}) =>
-              ( <View  style={styles.itemContainer}>
+              ( 
+              
+                
+               <View  style={styles.itemContainer}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.price}>{'\u20B9'} {item.price} </Text>
-                <AddSubtractItemsBar style={styles.bar} />
+                <AddSubtractItemsBar style={styles.bar} item={item} />
                 </View>
+                         
+            
               ) } />
 
     </View>

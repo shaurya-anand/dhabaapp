@@ -7,7 +7,7 @@ list :
         id : '1',
         name : 'Tawa plain roti',
         price : 5,
-        available : true
+        available : false
 
     },
 
@@ -16,7 +16,7 @@ list :
         id : '2',
         name : 'Tawa butter roti',
         price : 7,
-        available : true
+        available : false
 
     },
 
@@ -313,7 +313,7 @@ list :
     {  
         id : '38',
         name : 'Dal makhani half',
-        price : '60',
+        price : 60,
         available : true
 
     },
@@ -321,7 +321,7 @@ list :
     {  
         id : '39',
         name : 'Dal makhani full',
-        price : '60',
+        price : 60,
         available : true
 
     },
@@ -424,7 +424,7 @@ list :
     {  
         id : '52',
         name : 'Chilli paneer half',
-        price : '60',
+        price : 60,
         available : true
 
     },
@@ -432,7 +432,7 @@ list :
     {  
         id : '53',
         name : 'Chilli paneer half',
-        price : '60',
+        price : 60,
         available : true
 
     }
