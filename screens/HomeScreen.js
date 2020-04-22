@@ -81,7 +81,6 @@ const styles= StyleSheet.create({
             color : 'red',
             fontWeight : 'bold',
             flex :1,
-            marginLeft : 10
             
         },
 
@@ -90,10 +89,12 @@ const styles= StyleSheet.create({
             fontFamily : 'Roboto',
             color : 'white',
             fontWeight : 'bold',
-            marginLeft : 15,
+            textAlign : 'center',
+            justifyContent : "center",
             backgroundColor : Colors.primary,
             flex :1,
-            borderRadius : 10
+            borderRadius : 10,
+            marginRight : 5
             
         },
 

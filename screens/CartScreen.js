@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet,View,Text, Button, FlatList} from 'react-native';
+import {StyleSheet,View,Text, Button, FlatList, Alert} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -13,6 +13,28 @@ function CartScreen({navigation}){
 
   var cart = useSelector(state => state.cart)
   var cart_total = useSelector(state => state.cart_total)
+
+  const onClickHandler = () =>
+  {
+    if(cart_total < 100)
+    {
+      alert('The minimum amount for home delivery is ₹100 ')
+    }
+
+    else
+    {
+      Alert.alert(  
+        'Pakka na ?',  
+        'Confirm Order',  
+        [  
+            { text: 'No', onPress: () => {},  style: 'cancel',  },  
+            { text: 'Yes', onPress: () => navigation.navigate('OrderConfirmedScreen')},  
+        ],
+
+        { cancelable: true } 
+    );  
+    }
+  }
   
     return(
         <View style={styles.screen}>
@@ -36,6 +58,7 @@ function CartScreen({navigation}){
         <View style = {styles.cartlist}>
            <FlatList 
            contentContainerStyle={{ paddingBottom:50 }}
+           backgroundColor={'F5F0F0'}
            keyExtractor={(item) => item.itemid}
            data={cart}
            renderItem={({item}) =>
@@ -55,10 +78,10 @@ function CartScreen({navigation}){
                 </View>
                 
                 <View style={styles.subtotalContainer}>
-                <Text style={styles.subtotal}>₹ {item.itemsubtotal}</Text>
+                        <Text style={styles.subtotal}>₹ {item.itemsubtotal}</Text>
                 </View>
 
-                </View>
+              </View>
                          
             
               ) } />
@@ -70,7 +93,7 @@ function CartScreen({navigation}){
         </View>
       
          <View style={styles.confirmbutton}>
-          <Button title="Confirm Order" color={Colors.primary} onPress={() => navigation.navigate('OrderConfirmedScreen')}/>
+          <Button title="Confirm Order" color={Colors.primary} onPress={() => onClickHandler()}/>
         </View>
 
 
@@ -113,7 +136,8 @@ const styles= StyleSheet.create({
             width: '100%',
             bottom:50,
             justifyContent:'center',
-            alignItems :'center'
+            alignItems :'center',
+        
        },
 
        screen: {
@@ -126,7 +150,8 @@ const styles= StyleSheet.create({
         flexDirection : 'row',
         flex : 1,
         width : '100%',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        
        },
 
        nameContainer : {
@@ -142,6 +167,7 @@ const styles= StyleSheet.create({
        subtotalContainer : {
        flex : 1,
        alignItems:"center",
+       justifyContent : 'center',
        backgroundColor : Colors.primary,
        marginLeft : 10,
        marginRight : 10,
@@ -182,7 +208,10 @@ const styles= StyleSheet.create({
         cartlist : {
           height : 300,
           marginTop : 50,
-          width: '100%'
+          width: '100%',
+          //backgroundColor : '#FEDDDD',
+          backgroundColor : '#F5F0F0',
+          borderRadius : 25
         },
 
         carttotal : {
@@ -197,9 +226,9 @@ const styles= StyleSheet.create({
           fontSize : 26,
           color : 'black',
           borderRadius : 30,
-          borderColor : Colors.primary,
-          borderWidth: 3,
-          paddingHorizontal : 8
+           borderColor : Colors.primary,
+           borderWidth: 2,
+          paddingHorizontal : 8,
 
         }
 

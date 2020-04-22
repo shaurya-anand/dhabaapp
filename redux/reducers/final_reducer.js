@@ -2,14 +2,17 @@ const InitialState = {
     
 
     cart_total : 0,
-    cart : []
+    cart : [],
+    phone_number : '',
+    name : '',
+    address : ''
 
 
 
 }
 
 
-const order_reducer = (state = InitialState, action) => {
+const final_reducer = (state = InitialState, action) => {
     switch (action.type) {
 
         case 'increment_item' :
@@ -26,6 +29,8 @@ const order_reducer = (state = InitialState, action) => {
            else{
               return { ...state, cart_total : state.cart_total + action.item_price, cart : [...state.cart, action.item]}
              }
+
+        break
 
 
         case 'decrement_item'  : 
@@ -44,10 +49,24 @@ const order_reducer = (state = InitialState, action) => {
        {
         return { ...state, cart_total : state.cart_total - action.item_price, cart : state.cart.filter((i) => i.itemid !== action.item_id)}
        }
+
+       break
+
+       case 'add_number' :
+            return { ...state, phone_number : action.phone_number}
+            break
+
+       case 'add_name' :
+            return { ...state, name : action.name}
+            break
+
+       case 'add_address' :
+            return { ...state, address : action.address}
+            
        
         default : return state
     }
 
 }
 
-export default order_reducer
+export default final_reducer

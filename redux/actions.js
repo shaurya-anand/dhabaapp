@@ -34,4 +34,28 @@ export const DecrementItem = (item) =>
     }
 }
 
+export const AddPhoneNumber = (phone_number) =>
+{
+    return{
+        type : "add_number",
+        phone_number : phone_number,
+    }
+}
+
+export const AddName = (name) =>
+{
+    return{
+        type : "add_name",
+        name : name,
+    }
+}
+
+export const AddAddress = (address) =>
+{
+    return{
+        type : "add_address",
+        address : address,
+    }
+}
+
 

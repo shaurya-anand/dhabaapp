@@ -4,8 +4,13 @@ import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux'
+import store from '../redux/store'
 
 function ProfileScreen({navigation}) {
+   
+    const name = useSelector(state => state.name)
+    const address = useSelector(state => state.address)
 
     return(
   <View style={styles.screen}>
@@ -21,11 +26,19 @@ function ProfileScreen({navigation}) {
 
       </View>
 
-      <View>
-          <Text style={styles.text}> Name : </Text>
-          <Text style={styles.text}> Address : </Text>
+      <View style={styles.nameContainer}>
+                <Text style={styles.nametext}>{name}</Text>
       </View>
 
+      <View style={styles.addressContainer}>
+                <Text style={styles.descriptiontext}>- Address -</Text>         
+      </View>
+
+      <View style={styles.addressValueContainer}>
+                <Text style={styles.addresstext}>{address}</Text>         
+      </View>
+
+     
       <View style={styles.editbutton}>
           <Button title="Edit details" color={Colors.primary} onPress={() => navigation.navigate('EditDetailsScreen')} />
       </View>
@@ -37,8 +50,8 @@ function ProfileScreen({navigation}) {
 const styles= StyleSheet.create({
 
  backicon : {
-    marginTop: 40,
-    marginLeft: 5
+    marginTop: '10%',
+    marginLeft: '2%'
     },
 
  usericon:{
@@ -46,19 +59,39 @@ const styles= StyleSheet.create({
        backgroundColor: Colors.primary
     },
 
- text :{
-    marginTop:50,
-    marginLeft:10,
+ descriptiontext :{
     fontFamily : 'Roboto',
-    fontSize : 20,
+    fontSize : 18,
+    color: 'black',
     fontWeight :'bold',
-    color: 'black'
+  },
+
+  addresstext :{
+    fontFamily : 'Roboto',
+    fontSize : 16,
+    fontWeight :'bold',
+    color: Colors.primary,
+    marginHorizontal : 5,
+    textAlign  : 'center',
+    
+  },
+
+  nametext :{
+    paddingHorizontal : 10,
+    fontFamily : 'Roboto',
+    fontSize : 22,
+    fontWeight :'bold',
+    color: 'white',
+    backgroundColor : Colors.primary,
+    borderRadius  : 20,
+    elevation : 20,
+    
   },
 
  editbutton :{
      flexDirection: 'row',
      position: 'absolute',
-     bottom: 50,
+     bottom: '6%',
      width:'100%',
      justifyContent:'center',
      alignItems :'center'
@@ -69,7 +102,34 @@ topcontainer : {
 screen: {
     flex: 1,
     backgroundColor: '#fff'
-  }
+  },
+
+  nameContainer :{
+    marginTop : '10%',
+    width:'100%',
+    flexDirection : 'row',
+    justifyContent:"space-around",
+    flexWrap : 'wrap'
+
+},
+
+addressContainer :{
+    
+    marginTop : '20%',
+    width:'100%',
+    flexDirection : 'row',
+    justifyContent:"center",
+    flexWrap : 'wrap'
+},
+
+addressValueContainer :{
+    
+    marginTop : '3%',
+    width:'100%',
+    flexDirection : 'row',
+    justifyContent:"space-around",
+    flexWrap : 'wrap'
+}
 
 });
 
