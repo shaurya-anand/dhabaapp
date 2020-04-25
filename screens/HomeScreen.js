@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet,View,Text} from 'react-native';
+import {Platform,StyleSheet,View,Text} from 'react-native';
 import Colors from '../constants/Colors';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -7,12 +7,13 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
 import ItemsDisplay from '../components/ItemsDisplay';
 import ItemsList from '../components/ItemsList';
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
 import store from '../redux/store'
+
 
 function HomeScreen({navigation}){
 
-    const cart_total = useSelector(state => state.cart_total)
+  const cart_total = useSelector(state => state.cart_total)
 
     return(
     <View style={styles.screen}>

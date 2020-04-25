@@ -5,7 +5,8 @@ const InitialState = {
     cart : [],
     phone_number : '',
     name : '',
-    address : ''
+    address : '',
+    locationavailable : false
 
 
 
@@ -62,6 +63,15 @@ const final_reducer = (state = InitialState, action) => {
 
        case 'add_address' :
             return { ...state, address : action.address}
+            break
+
+       case 'update_loc_to_true' : 
+             return { ...state, locationavailable : action.location}
+             break
+
+       case 'update_loc_to_flase' : 
+             return { ...state, locationavailable : action.location}
+             break
             
        
         default : return state

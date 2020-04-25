@@ -58,4 +58,20 @@ export const AddAddress = (address) =>
     }
 }
 
+export const update_location_to_true = () =>
+{
+    return{
+        type : 'update_loc_to_true',
+        location : true,
+    }
+}
+
+export const update_location_to_false = () =>
+{
+    return{
+        type : 'update_loc_to_flase',
+        location : false,
+    }
+}
+
 

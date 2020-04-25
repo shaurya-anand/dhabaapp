@@ -1,11 +1,15 @@
-import React from 'react';
-import {StyleSheet,View,Text, Button, FlatList, Alert} from 'react-native';
+import React,  { useState, useEffect } from 'react';
+import {Platform, StyleSheet,View,Text, Button, FlatList, Alert} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux'
 import store from '../redux/store'
+import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+import {update_location_to_true, update_location_to_false} from '../redux/actions'
+
 
 
 
@@ -13,27 +17,73 @@ function CartScreen({navigation}){
 
   var cart = useSelector(state => state.cart)
   var cart_total = useSelector(state => state.cart_total)
+  const locationavailable = useSelector(state => state.locationavailable)
+  const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    (async () => {
+
+      try {
+      let { status } = await Location.requestPermissionsAsync();
+
+      if (status !== 'granted') {
+        dispatch(update_location_to_false())
+      }
+
+      else 
+      {
+        dispatch(update_location_to_true())
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+
+    }
+
+     catch( error)
+     {
+       let status = Location.getProviderStatusAsync()
+       if(!status.locationServicesEnabled)
+       {
+        dispatch(update_location_to_false())
+       }
+     }
+
+    })();
+
+  });
 
   const onClickHandler = () =>
   {
-    if(cart_total < 100)
+    if(locationavailable)
     {
-      alert('The minimum amount for home delivery is ₹100 ')
-    }
 
-    else
-    {
-      Alert.alert(  
-        'Pakka na ?',  
-        'Confirm Order',  
-        [  
+       if(cart_total < 100)
+         {
+            alert('The minimum amount for home delivery is ₹100 ')
+         }
+
+       else
+         {
+           Alert.alert(  
+          'Pakka na ?',  
+          'Confirm Order',  
+           [  
             { text: 'No', onPress: () => {},  style: 'cancel',  },  
-            { text: 'Yes', onPress: () => navigation.navigate('OrderConfirmedScreen')},  
-        ],
+            { text: 'Yes', onPress: () => navigation.navigate('OrderConfirmedScreen')
+          },  
+           ],
 
-        { cancelable: true } 
-    );  
-    }
+            { cancelable: true } 
+            );  
+          }
+   }
+
+   else
+   {
+     alert('Press back and give location permissions when asked this time xD')
+   }
+
   }
   
     return(

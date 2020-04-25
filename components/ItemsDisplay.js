@@ -15,15 +15,15 @@ function ItemsDisplay(){
            data={ItemsList.list}
            renderItem={({item}) =>
               ( 
-              
-                
-               <View  style={styles.itemContainer}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.price}>{'\u20B9'} {item.price} </Text>
-                <AddSubtractItemsBar style={styles.bar} item={item} />
-                </View>
-                         
+        
             
+                <View  style={styles.itemContainer}>
+                     <Text style={styles.name}>{item.name}</Text>
+                     <Text style={styles.price}>{'\u20B9'} {item.price} </Text>
+                     <AddSubtractItemsBar style={styles.bar} item={item} />
+                </View>
+             
+        
               ) } />
 
     </View>
