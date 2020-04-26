@@ -20,7 +20,10 @@ function OrderConfirmedScreen({navigation}){
 
 
         <View style={styles.buttoncontainer}>
-        <MaterialCommunityIcons.Button name='arrow-left-bold-circle-outline' size={60} color={Colors.primary} backgroundColor='white' onPress={() => navigation.navigate('HomeScreen')}/>
+        <MaterialCommunityIcons.Button name='arrow-left-bold-circle-outline' size={60} color={Colors.primary} backgroundColor='white' onPress={() => { navigation.reset({
+                                                            index: 0,
+                                                             routes: [{ name: 'HomeScreen' }],
+                                                           }); }}/>
         </View>
 
    </View>

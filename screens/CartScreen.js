@@ -9,6 +9,8 @@ import store from '../redux/store'
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import {update_location_to_true, update_location_to_false} from '../redux/actions'
+import { StackActions, NavigationActions } from 'react-navigation'
+import { getPreciseDistance} from 'geolib';
 
 
 
@@ -19,7 +21,7 @@ function CartScreen({navigation}){
   var cart_total = useSelector(state => state.cart_total)
   const locationavailable = useSelector(state => state.locationavailable)
   const dispatch = useDispatch()
-
+  var dis = 6000
 
   useEffect(() => {
     (async () => {
@@ -37,6 +39,11 @@ function CartScreen({navigation}){
       }
 
       let location = await Location.getCurrentPositionAsync({});
+
+      dis = getPreciseDistance(
+        { latitude: location.coords.latitude, longitude: location.coords.longitude},
+        { latitude: 28.854586, longitude: 77.097063 }
+      );
 
     }
 
@@ -63,15 +70,23 @@ function CartScreen({navigation}){
             alert('The minimum amount for home delivery is ₹100 ')
          }
 
+      else if (dis >= 5000)
+      {
+        alert('You are too far! (︶︹︺) Delivery radius is 5 kms. If within 5 kms, check location permissions and restart app')
+      }
+
        else
          {
            Alert.alert(  
           'Pakka na ?',  
-          'Confirm Order',  
+          'Confirm Order ^_^',  
            [  
             { text: 'No', onPress: () => {},  style: 'cancel',  },  
-            { text: 'Yes', onPress: () => navigation.navigate('OrderConfirmedScreen')
-          },  
+            { text: 'Yes', onPress: () => { navigation.reset({
+                                                            index: 0,
+                                                             routes: [{ name: 'OrderConfirmedScreen' }],
+                                                           }); }
+            },  
            ],
 
             { cancelable: true } 
@@ -81,7 +96,7 @@ function CartScreen({navigation}){
 
    else
    {
-     alert('Press back and give location permissions when asked this time xD')
+     alert('Unable to access location. Kindly switch on GPS or check app location settings ')
    }
 
   }

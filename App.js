@@ -15,7 +15,7 @@ import OrderConfirmedScreen from './screens/OrderConfirmedScreen';
 import EditDetailsScreen from './screens/EditDetailsScreen';
 import {Provider} from 'react-redux';
 import store from './redux/store'
-
+import { StackActions, NavigationActions } from 'react-navigation'
 
 
 const Stack= createStackNavigator();
@@ -26,8 +26,10 @@ export default class App extends Component
   return (
 
     <Provider store={store}>
-    <NavigationContainer>
 
+    <NavigationContainer>
+     
+    
     <Stack.Navigator headerMode='none'>
     <Stack.Screen name='LoginScreen' component={LoginScreen}/>
     <Stack.Screen name='InputDetailsScreen' component={InputDetailsScreen}/>
@@ -35,11 +37,12 @@ export default class App extends Component
     <Stack.Screen name='OrderHistoryScreen' component={OrderHistoryScreen}/>
     <Stack.Screen name='CartScreen' component={CartScreen}/>
     <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
-    <Stack.Screen name='OrderConfirmedScreen' component={OrderConfirmedScreen}/>
     <Stack.Screen name='EditDetailsScreen' component={EditDetailsScreen}/>
+    <Stack.Screen name='OrderConfirmedScreen' component={OrderConfirmedScreen}/>
     </Stack.Navigator>
 
     </NavigationContainer>
+
     </Provider>
 
   );
