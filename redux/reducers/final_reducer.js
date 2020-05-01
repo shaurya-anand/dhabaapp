@@ -72,7 +72,15 @@ const final_reducer = (state = InitialState, action) => {
        case 'update_loc_to_flase' : 
              return { ...state, locationavailable : action.location}
              break
-            
+
+       case 'clear_cart' : 
+             return {
+                ...state,
+                cart_total : 0,
+                cart : [],
+                locationavailable : false
+             }
+            break
        
         default : return state
     }

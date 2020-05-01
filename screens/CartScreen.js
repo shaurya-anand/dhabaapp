@@ -8,7 +8,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import store from '../redux/store'
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
-import {update_location_to_true, update_location_to_false} from '../redux/actions'
+import {update_location_to_true, update_location_to_false, clear_cart} from '../redux/actions'
 import { StackActions, NavigationActions } from 'react-navigation'
 import { getPreciseDistance} from 'geolib';
 
@@ -82,10 +82,13 @@ function CartScreen({navigation}){
           'Confirm Order ^_^',  
            [  
             { text: 'No', onPress: () => {},  style: 'cancel',  },  
-            { text: 'Yes', onPress: () => { navigation.reset({
+            { text: 'Yes', onPress: () => { 
+              navigation.reset({
                                                             index: 0,
                                                              routes: [{ name: 'OrderConfirmedScreen' }],
-                                                           }); }
+                                                           });
+              dispatch(clear_cart())
+                                                           }
             },  
            ],
 

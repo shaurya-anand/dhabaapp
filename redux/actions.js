@@ -74,4 +74,11 @@ export const update_location_to_false = () =>
     }
 }
 
+export const clear_cart = () =>
+{
+    return{
+        type : 'clear_cart'
+    }
+}
+
 
