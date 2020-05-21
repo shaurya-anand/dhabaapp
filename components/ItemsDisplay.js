@@ -6,6 +6,25 @@ import ItemsList from '../components/ItemsList';
 
 function ItemsDisplay(){
 
+function categoryselector (item)  {
+switch(item.category) {
+
+  case 1 : return styles.name1
+  break;
+  case 2 : return styles.name2
+  break;
+  case 3 : return styles.name3
+  break;
+  case 4 : return styles.name4
+  break;
+  case 5 : return styles.name5
+  break;
+  default : return styles.name2
+  
+}
+}
+  
+
    
     return(
     <View>
@@ -18,7 +37,7 @@ function ItemsDisplay(){
         
             
                 <View  style={styles.itemContainer}>
-                     <Text style={styles.name}>{item.name}</Text>
+                     <Text style={categoryselector(item)}>{item.name}</Text>
                      <Text style={styles.price}>{'\u20B9'} {item.price} </Text>
                      <AddSubtractItemsBar style={styles.bar} item={item} />
                 </View>
@@ -40,7 +59,7 @@ const styles= StyleSheet.create({
 
    },
       
-   name : {
+   name1 : {
     flex :1,
     marginLeft : 10,
     fontFamily : 'serif',
@@ -48,6 +67,42 @@ const styles= StyleSheet.create({
     color : 'black',
     fontWeight : 'bold'
     },
+
+    name2 : {
+      flex :1,
+      marginLeft : 10,
+      fontFamily : 'serif',
+      fontSize : 16,
+      color : '#959A02',
+      fontWeight : 'bold'
+      },
+    
+    name3 : {
+        flex :1,
+        marginLeft : 10,
+        fontFamily : 'serif',
+        fontSize : 16,
+        color : '#9B00AF',
+        fontWeight : 'bold'
+        },
+
+     name4 : {
+          flex :1,
+          marginLeft : 10,
+          fontFamily : 'serif',
+          fontSize : 16,
+          color : '#A66404',
+          fontWeight : 'bold'
+          },
+
+      name5 : {
+            flex :1,
+            marginLeft : 10,
+            fontFamily : 'serif',
+            fontSize : 16,
+            color : '#0740A1',
+            fontWeight : 'bold'
+            },
 
    price : {
     flex :1,

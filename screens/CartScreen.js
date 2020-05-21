@@ -72,7 +72,7 @@ function CartScreen({navigation}){
 
       else if (dis >= 5000)
       {
-        alert('You are too far! (︶︹︺) Delivery radius is 5 kms. If within 5 kms, check location permissions and restart app')
+        alert('You are too far !       ︶︹︺                    Delivery radius is 5 kms. If within 5 kms, kindly check location permissions and restart app.')
       }
 
        else
