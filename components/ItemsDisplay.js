@@ -1,8 +1,9 @@
-import React from 'react';
-import {StyleSheet,View,Text,FlatList} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {ActivityIndicator, StyleSheet,View,Text,FlatList} from 'react-native';
 import Colors from '../constants/Colors';
 import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
 import ItemsList from '../components/ItemsList';
+
 
 function ItemsDisplay(){
 
@@ -23,27 +24,49 @@ switch(item.category) {
   
 }
 }
-  
 
+const [isLoading, setLoading] = useState(true);
+const [data, setData] = useState([]);
+  
+useEffect(() => {
+  fetch('https://my-json-server.typicode.com/shaurya-anand/jsontest2/db')
+    .then((response) => response.json())
+    .then((json) => setData(json.list))
+    .catch((error) => console.error(error))
+    .finally(() => setLoading(false));
+}, []);
+
+ListEmpty = () => {
+  return (
+    //View to show when list is empty
+    <View style={styles.EmptyContainer}>
+      <Text style={{ textAlign: 'center', color : Colors.primary, marginTop : '50%', fontSize : 18, fontFamily : 'Roboto' }}>Closed at the moment   ( '_' )</Text>
+    </View>
+  );
+};
    
     return(
-    <View>
+    <View> 
+      {isLoading ? <ActivityIndicator/> : (
            <FlatList 
            contentContainerStyle={{ paddingBottom: 250}}
            keyExtractor={(item) => item.id}
-           data={ItemsList.list}
+           data={data}
+           extraData={data}
+           ListEmptyComponent={ListEmpty()}
            renderItem={({item}) =>
-              ( 
+              (
         
-            
                 <View  style={styles.itemContainer}>
                      <Text style={categoryselector(item)}>{item.name}</Text>
                      <Text style={styles.price}>{'\u20B9'} {item.price} </Text>
                      <AddSubtractItemsBar style={styles.bar} item={item} />
                 </View>
              
-        
-              ) } />
+            
+     ) } />
+
+     )}
 
     </View>
     );
@@ -73,7 +96,7 @@ const styles= StyleSheet.create({
       marginLeft : 10,
       fontFamily : 'serif',
       fontSize : 16,
-      color : '#959A02',
+      color : '#069F5D',
       fontWeight : 'bold'
       },
     
@@ -113,7 +136,13 @@ const styles= StyleSheet.create({
 
     bar : {
    flex :1,
-    }
+    },
+
+    EmptyContainer: {
+      justifyContent: 'center',
+      alignItems : 'center',
+      flex: 1,
+    },
 });
 
 export default ItemsDisplay;

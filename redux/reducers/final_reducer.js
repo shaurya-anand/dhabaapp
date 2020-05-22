@@ -8,8 +8,6 @@ const InitialState = {
     address : '',
     locationavailable : false
 
-
-
 }
 
 
@@ -81,7 +79,7 @@ const final_reducer = (state = InitialState, action) => {
                 locationavailable : false
              }
             break
-       
+
         default : return state
     }
 
