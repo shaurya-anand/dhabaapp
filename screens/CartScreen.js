@@ -11,6 +11,7 @@ import * as Location from 'expo-location';
 import {update_location_to_true, update_location_to_false, clear_cart} from '../redux/actions'
 import { StackActions, NavigationActions } from 'react-navigation'
 import { getPreciseDistance} from 'geolib';
+import NetInfo from '@react-native-community/netinfo';
 
 
 
@@ -22,6 +23,8 @@ function CartScreen({navigation}){
   const locationavailable = useSelector(state => state.locationavailable)
   const dispatch = useDispatch()
   var dis = 6000
+
+  const [isInternetReachable, setIsInternetReachable] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -103,32 +106,56 @@ function CartScreen({navigation}){
    }
 
   }
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+    
+        setIsInternetReachable(state.isInternetReachable)
+        
+      });
+    });
+
+   useEffect(() => {
+   
+      if(!isInternetReachable && isInternetReachable != null)
+        {
+            alert('Kindly check internet connection')
+            dispatch(clear_cart())
+        }
+    },[isInternetReachable])
   
     return(
-        <View style={styles.screen}>
 
-        <View style={styles.topcontainer}>
+<View style={styles.screen}>
+    <View style={styles.topcontainer}>
+        <View style={styles.iconcontainer}>
 
-        <View style={styles.backicon}>
-        <MaterialCommunityIcons.Button name='arrow-left-bold-circle-outline' size={40} color='white' backgroundColor={Colors.primary} onPress={() => navigation.goBack()}/>
-        </View>
+                <View style={styles.backicon}>
+                       <MaterialCommunityIcons.Button name='arrow-left-bold-circle-outline' size={40} color='white' backgroundColor={Colors.primary} onPress={() => navigation.goBack()}/>
+                </View>
 
-        <View style={styles.foodicon}>
-        <MaterialCommunityIcons name='silverware-fork-knife' size={50} color='white' backgroundColor={Colors.primary}/>
-        </View>
+                <View style={styles.foodicon}>
+                       <MaterialCommunityIcons name='silverware-fork-knife' size={50} color='white' backgroundColor={Colors.primary}/>
+                </View>
+
+                <View style={styles.fakeicon}>
+
+                </View>
 
         </View>
         
         <View>
           <Text  style={styles.text}> Your Plate </Text>
         </View>
+    </View>
  
         <View style = {styles.cartlist}>
-           <FlatList 
-           contentContainerStyle={{ paddingBottom:50 }}
+           <FlatList
            backgroundColor={'F5F0F0'}
+           contentContainerStyle = {{paddingBottom : 20}}
            keyExtractor={(item) => item.itemid}
            data={cart}
+           extraData = {cart}
            renderItem={({item}) =>
               ( 
               
@@ -165,28 +192,39 @@ function CartScreen({navigation}){
         </View>
 
 
-    </View> 
+</View> 
     );
 
 };
 
 const styles= StyleSheet.create({
  
-    topcontainer : {
+    iconcontainer : {
         flexDirection : 'row',
-        backgroundColor: Colors.primary
+        backgroundColor: Colors.primary,
+        justifyContent: 'space-around'
 
     },
-      
-        backicon : {
-        marginTop: 40,
-        marginLeft:5
-        },
 
-        foodicon:{
-            paddingLeft:100,
-            paddingTop : 40
-         },
+    topcontainer : { 
+      backgroundColor : Colors.primary,
+    },
+      
+    backicon : {
+      flex : 1,
+      marginTop : '8%',
+      marginLeft : '2%'
+      },
+
+      foodicon:{
+          flex : 1,
+          marginTop : '10%',
+          marginLeft : '12%'
+      },
+
+       fakeicon : {
+          flex : 1,
+          },
 
          text :{
             width:'100%',
@@ -195,14 +233,13 @@ const styles= StyleSheet.create({
             fontSize:22,
             fontWeight: 'bold',
             color:'white',
-            backgroundColor:Colors.primary
 
           },
 
           confirmbutton :{
             position: 'absolute',
             width: '100%',
-            bottom:50,
+            bottom: '6%',
             justifyContent:'center',
             alignItems :'center',
         
@@ -274,12 +311,12 @@ const styles= StyleSheet.create({
             },
 
         cartlist : {
-          height : 300,
-          marginTop : 50,
+          height : '40%',
+          marginTop : 40,
           width: '100%',
           //backgroundColor : '#FEDDDD',
           backgroundColor : '#F5F0F0',
-          borderRadius : 25
+          borderRadius : 25,
         },
 
         carttotal : {
@@ -298,7 +335,7 @@ const styles= StyleSheet.create({
            borderWidth: 2,
           paddingHorizontal : 8,
 
-        }
+        },
 
 });
 

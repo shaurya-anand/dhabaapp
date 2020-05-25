@@ -1,11 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {ActivityIndicator, StyleSheet,View,Text,FlatList} from 'react-native';
 import Colors from '../constants/Colors';
 import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
 import ItemsList from '../components/ItemsList';
-
+import NetInfo from '@react-native-community/netinfo';
+import {useSelector, useDispatch} from 'react-redux'
+import store from '../redux/store'
+import {clear_cart} from '../redux/actions'
 
 function ItemsDisplay(){
+  
+  const dispatch = useDispatch()
+
+  const [isInternetReachable, setIsInternetReachable] = useState(null)
+
+  useEffect(() => {
+  const unsubscribe = NetInfo.addEventListener(state => {
+  
+      setIsInternetReachable(state.isInternetReachable)
+      
+    });
+  });
+
+ 
+
+  useEffect(() => {
+   
+    if(!isInternetReachable && isInternetReachable != null)
+      {
+          alert('Kindly check your internet connection')
+          dispatch(clear_cart())
+      }
+  },[isInternetReachable])
 
 function categoryselector (item)  {
 switch(item.category) {
@@ -26,35 +52,93 @@ switch(item.category) {
 }
 
 const [isLoading, setLoading] = useState(true);
+const [isLoading2, setLoading2] = useState(true);
 const [data, setData] = useState([]);
-  
-useEffect(() => {
-  fetch('https://my-json-server.typicode.com/shaurya-anand/jsontest2/db')
+const [filteredData, setFilteredData] = useState([]);
+
+const [temp, setTemp] = useState(0)
+
+useEffect(()=>{
+  setInterval(()=>{
+    setTemp((prevTemp)=>prevTemp+1)
+  }, 2000)
+}, [])
+
+const fetchdata = async() =>{
+
+try {
+  fetch('https://my-json-server.typicode.com/shaurya-anand/jsontest3/db')
     .then((response) => response.json())
     .then((json) => setData(json.list))
-    .catch((error) => console.error(error))
-    .finally(() => setLoading(false));
-}, []);
+    .then(() => setLoading(false))
+    .catch(() => setLoading(true))
+  }
 
-ListEmpty = () => {
+catch(error) {
+setLoading(true)
+}
+
+} 
+
+const filter = () =>
+{
+tempdata= []
+count = 0;
+for(i=0; i< data.length; i++)
+{
+  if(data[i].available)
+  {
+    tempdata.push(data[i])
+  }
+
+  if(i>0)
+  {
+    count = count+1
+  }
+
+}
+setFilteredData(tempdata)
+if(count!=0)
+{
+  setLoading2(false)
+}
+}
+  
+useEffect(() => {
+fetchdata()
+filter()
+}, [temp]);
+
+ const ListEmpty = () => {
+  if(!isLoading2) {
   return (
     //View to show when list is empty
     <View style={styles.EmptyContainer}>
-      <Text style={{ textAlign: 'center', color : Colors.primary, marginTop : '50%', fontSize : 18, fontFamily : 'Roboto' }}>Closed at the moment   ( '_' )</Text>
+      <Text style = {styles.storeClosedText}>    Band hai abhi !    </Text>
     </View>
   );
+  }
 };
+
    
     return(
-    <View> 
-      {isLoading ? <ActivityIndicator/> : (
-           <FlatList 
+
+    <View > 
+      { !isInternetReachable || isLoading ? ( 
+        <View style = {styles.spinner}>
+        <ActivityIndicator size="large" color={Colors.primary}/>
+       </View>
+      
+         )
+                  : (
+          
+            <FlatList 
            contentContainerStyle={{ paddingBottom: 250}}
            keyExtractor={(item) => item.id}
-           data={data}
-           extraData={data}
+           data={filteredData}
+           extraData={filteredData}
            ListEmptyComponent={ListEmpty()}
-           renderItem={({item}) =>
+           renderItem = { ({item}) =>
               (
         
                 <View  style={styles.itemContainer}>
@@ -62,11 +146,14 @@ ListEmpty = () => {
                      <Text style={styles.price}>{'\u20B9'} {item.price} </Text>
                      <AddSubtractItemsBar style={styles.bar} item={item} />
                 </View>
-             
-            
-     ) } />
+              
+              ) } />  
 
-     )}
+                   ) 
+     
+      } 
+
+    
 
     </View>
     );
@@ -143,6 +230,25 @@ const styles= StyleSheet.create({
       alignItems : 'center',
       flex: 1,
     },
+
+    spinner : {
+      flex : 1,
+      justifyContent : 'center',
+      alignItems : 'center',
+      marginTop : '50%'
+    },
+   storeClosedText : { 
+      textAlign: 'center',
+      color : 'white',
+      marginTop : '50%', 
+      fontSize : 18,
+      fontFamily : 'Roboto',
+      fontWeight :'bold',
+      backgroundColor : Colors.primary,
+      padding : 10,
+      borderRadius : 15
+      
+   }
 });
 
 export default ItemsDisplay;

@@ -8,46 +8,60 @@ import { NavigationContainer } from '@react-navigation/native';
 function OrderHistoryScreen({navigation}) {
 
     return(
-     <View>
 
-        <View style={styles.topcontainer}>
+<View style={styles.screen}>
 
-        <View style={styles.backicon}>
-        <MaterialCommunityIcons.Button name='arrow-left-bold-circle-outline' size={40} color='white' backgroundColor={Colors.primary} onPress={() => navigation.goBack()} />
-        </View>
+    <View style={styles.topcontainer}>
 
-        <View style={styles.foodicon}>
-        <MaterialCommunityIcons name='food' size={90} color='white' backgroundColor={Colors.primary}/>
-        </View>
+        <View style={styles.iconcontainer}>
+
+            <View style={styles.backicon}>
+                   <MaterialCommunityIcons.Button name='arrow-left-bold-circle-outline' size={40} color='white' backgroundColor={Colors.primary} onPress={() => navigation.goBack()} />
+            </View>
+
+            <View style={styles.foodicon}>
+                   <MaterialCommunityIcons name='food' size={90} color='white' backgroundColor={Colors.primary}/>
+            </View>
+
+            <View style={styles.fakeicon}>
+            </View>
 
         </View>
         
-        <View>
+        <View >
           <Text  style={styles.text}> Order History </Text>
         </View>
 
     </View> 
+</View>
     );
 
 };
 
 const styles= StyleSheet.create({
         
-    topcontainer : {
+    iconcontainer : {
         flexDirection : 'row',
-        backgroundColor: Colors.primary
+        backgroundColor: Colors.primary,
+        justifyContent : 'space-between'
 
     },
       
         backicon : {
-        marginTop: 40,
-        marginLeft:5
+        flex : 1,
+        marginTop : '8%',
+        marginLeft : '2%'
         },
 
         foodicon:{
-            paddingLeft:85,
-            paddingTop : 20
-         },
+            flex : 1,
+            marginTop : '8%',
+            marginLeft : '5%'
+        },
+
+         fakeicon : {
+            flex : 1,
+            },
 
          text :{
             width:'100%',
@@ -56,9 +70,17 @@ const styles= StyleSheet.create({
             fontSize:22,
             fontWeight: 'bold',
             color:'white',
-            backgroundColor:Colors.primary
 
           },
+
+          topcontainer : {
+            backgroundColor: Colors.primary,
+    
+        },
+
+        screen : {
+            flex: 1
+        }
      
 
 });
