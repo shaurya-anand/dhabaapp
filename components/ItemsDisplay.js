@@ -67,7 +67,7 @@ useEffect(()=>{
 const fetchdata = async() =>{
 
 try {
-  fetch('https://my-json-server.typicode.com/shaurya-anand/jsontest3/db')
+  fetch('https://my-json-server.typicode.com/shaurya-anand/jsontest2/db')
     .then((response) => response.json())
     .then((json) => setData(json.list))
     .then(() => setLoading(false))

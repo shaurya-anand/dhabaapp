@@ -16,12 +16,14 @@ import EditDetailsScreen from './screens/EditDetailsScreen';
 import {Provider} from 'react-redux';
 import store from './redux/store'
 import { StackActions, NavigationActions } from 'react-navigation'
-
+import AsyncStorage from '@react-native-community/async-storage'
 
 const Stack= createStackNavigator();
 
 export default class App extends Component
 {
+ 
+
   render(){
   return (
 
@@ -29,16 +31,16 @@ export default class App extends Component
 
     <NavigationContainer>
      
-    
+   
     <Stack.Navigator headerMode='none'>
-    <Stack.Screen name='LoginScreen' component={LoginScreen}/>
-    <Stack.Screen name='InputDetailsScreen' component={InputDetailsScreen}/>
-    <Stack.Screen name='HomeScreen' component={HomeScreen}/>
-    <Stack.Screen name='OrderHistoryScreen' component={OrderHistoryScreen}/>
-    <Stack.Screen name='CartScreen' component={CartScreen}/>
-    <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
-    <Stack.Screen name='EditDetailsScreen' component={EditDetailsScreen}/>
-    <Stack.Screen name='OrderConfirmedScreen' component={OrderConfirmedScreen}/>
+        <Stack.Screen name='LoginScreen' component={LoginScreen}/>
+        <Stack.Screen name='InputDetailsScreen' component={InputDetailsScreen}/>
+        <Stack.Screen name='HomeScreen' component={HomeScreen}/>
+        <Stack.Screen name='OrderHistoryScreen' component={OrderHistoryScreen}/>
+        <Stack.Screen name='CartScreen' component={CartScreen}/>
+        <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
+        <Stack.Screen name='EditDetailsScreen' component={EditDetailsScreen}/>
+        <Stack.Screen name='OrderConfirmedScreen' component={OrderConfirmedScreen}/>
     </Stack.Navigator>
 
     </NavigationContainer>

@@ -56,7 +56,7 @@ const styles= StyleSheet.create({
         foodicon:{
             flex : 1,
             marginTop : '8%',
-            marginLeft : '5%'
+            marginLeft : '6%'
         },
 
          fakeicon : {

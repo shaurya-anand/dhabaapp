@@ -135,7 +135,7 @@ function CartScreen({navigation}){
                 </View>
 
                 <View style={styles.foodicon}>
-                       <MaterialCommunityIcons name='silverware-fork-knife' size={50} color='white' backgroundColor={Colors.primary}/>
+                       <MaterialCommunityIcons name='silverware-fork-knife' size={64} color='white' backgroundColor={Colors.primary}/>
                 </View>
 
                 <View style={styles.fakeicon}>
@@ -219,7 +219,7 @@ const styles= StyleSheet.create({
       foodicon:{
           flex : 1,
           marginTop : '10%',
-          marginLeft : '12%'
+          marginLeft : '11%'
       },
 
        fakeicon : {
@@ -233,6 +233,8 @@ const styles= StyleSheet.create({
             fontSize:22,
             fontWeight: 'bold',
             color:'white',
+            marginTop : 3,
+            marginBottom : 1
 
           },
 

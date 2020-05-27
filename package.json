@@ -8,7 +8,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "0.1.5",
+    "@react-native-community/netinfo": "4.6.0",
     "@react-navigation/native": "^5.0.1",
     "@react-navigation/stack": "^5.0.1",
     "expo": "~36.0.0",
@@ -24,8 +26,7 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.8",
     "react-redux": "^7.2.0",
-    "redux": "^4.0.5",
-    "@react-native-community/netinfo": "4.6.0"
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",
