@@ -12,45 +12,27 @@ import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderConfirmedScreen from './screens/OrderConfirmedScreen';
+import InitialScreen from './screens/InitialScreen';
 import EditDetailsScreen from './screens/EditDetailsScreen';
 import {Provider} from 'react-redux';
 import store from './redux/store'
 import { StackActions, NavigationActions } from 'react-navigation'
 import AsyncStorage from '@react-native-community/async-storage';
 
+
+
 const Stack= createStackNavigator();
 
 function App() {
 
-const [userNumber, setUserNumber] = useState('')
-
-const readData = async () => {
-  try {
-    const Number = await AsyncStorage.getItem('storeNumber')
-    const Name = await AsyncStorage.getItem('storeName')
-    const Address = await AsyncStorage.getItem('storeAddress')
-
-    if (Number !== null && Name !== null && Address !== null) {
-      setUserNumber(Number)
-    }
-  } catch (e) {
-    setUserNumber('')
-  }
-}
-
-useEffect(() => {
-  readData()
-}, [])
-
-
-  return (
-
+  return(
     <Provider store={store}>
-
+    
     <NavigationContainer>
      
-   
-    <Stack.Navigator headerMode='none' initialRouteName={[ (userNumber == '') ? 'LoginScreen' : 'HomeScreen']}>
+    
+    <Stack.Navigator headerMode='none'>
+        <Stack.Screen name = 'InitialScreen' component = {InitialScreen}/>
         <Stack.Screen name='LoginScreen' component={LoginScreen}/>
         <Stack.Screen name='InputDetailsScreen' component={InputDetailsScreen}/>
         <Stack.Screen name='HomeScreen' component={HomeScreen}/>
@@ -60,16 +42,19 @@ useEffect(() => {
         <Stack.Screen name='EditDetailsScreen' component={EditDetailsScreen}/>
         <Stack.Screen name='OrderConfirmedScreen' component={OrderConfirmedScreen}/>
     </Stack.Navigator>
-
+    
     </NavigationContainer>
-
+    
     </Provider>
-
-  );
+    )
 }
 
+
+
+
+
 const styles = StyleSheet.create({
-  
+
 });
 
 export default App;
