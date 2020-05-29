@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, Alert} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -7,17 +7,27 @@ import { NavigationContainer } from '@react-navigation/native';
 import {AddPhoneNumber} from '../redux/actions'
 import store from '../redux/store'
 import {useSelector, useDispatch} from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 function LoginScreen({navigation}){
 
     const dispatch = useDispatch()
-    
+
     const[enteredValue, setEnteredValue] = useState('');
 
     const numberInputHandler = inputText => {
         setEnteredValue(inputText.replace(/[^0-9]/g, ''));
      };  
+
+    const saveData = async () => {
+        try {
+          await AsyncStorage.setItem('storeNumber', enteredValue)
+        } catch (e) {
+        alert('Unable to store locally for future use')
+        }
+      }
+    
 
     const onClickHandler = () => {
          
@@ -25,6 +35,7 @@ function LoginScreen({navigation}){
       if(enteredValue.length == 10)
       {
         dispatch(AddPhoneNumber(enteredValue));
+        saveData(enteredValue)
         navigation.replace('InputDetailsScreen');
       }
 

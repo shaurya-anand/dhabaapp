@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Platform,StyleSheet,View,Text} from 'react-native';
 import Colors from '../constants/Colors';
 import {NavigationContainer} from '@react-navigation/native';
@@ -7,13 +7,36 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
 import ItemsDisplay from '../components/ItemsDisplay';
 import ItemsList from '../components/ItemsList';
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import store from '../redux/store'
+import AsyncStorage from '@react-native-community/async-storage';
+import {AddPhoneNumber, AddName, AddAddress} from '../redux/actions'
 
 
 function HomeScreen({navigation}){
 
   const cart_total = useSelector(state => state.cart_total)
+  const dispatch = useDispatch()
+
+  const readData = async () => {
+    try {
+      const Number = await AsyncStorage.getItem('storeNumber')
+      const Name = await AsyncStorage.getItem('storeName')
+      const Address = await AsyncStorage.getItem('storeAddress')
+  
+      if (Number !== null && Name !== null && Address !== null) {
+        dispatch(AddPhoneNumber(Number));
+        dispatch(AddName(Name));
+        dispatch(AddAddress(Address));
+      }
+    } catch (e) {
+        alert('Clear app data and restart app')
+    }
+  }
+  
+  useEffect(() => {
+    readData()
+  }, [])
 
     return(
     <View style={styles.screen}>

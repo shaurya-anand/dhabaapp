@@ -4,9 +4,10 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import {AddName, AddAddress} from '../redux/actions'
+import {AddName, AddAddress, AddPhoneNumber} from '../redux/actions'
 import store from '../redux/store'
 import {useSelector, useDispatch} from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage'
 
 
 
@@ -16,28 +17,45 @@ function EditDetailsScreen({navigation}){
 
     const[enteredName, setEnteredName] = useState('');
     const[enteredAddress, setEnteredAddress] = useState('');
+    const[enteredNumber, setEnteredNumber] = useState('');
 
     const nameInputHandler = inputText => {
         setEnteredName(inputText);
      };
 
-     const addressInputHandler = inputText => {
+    const numberInputHandler = inputText => {
+        setEnteredNumber(inputText.replace(/[^0-9]/g, ''));
+     };  
+
+    const addressInputHandler = inputText => {
         setEnteredAddress(inputText);
      };
+
+    const saveData = async () => {
+        try {
+          await AsyncStorage.setItem('storeName', enteredName)
+          await AsyncStorage.setItem('storeAddress', enteredAddress)
+          await AsyncStorage.setItem('storeNumber', enteredNumber)
+        } catch (e) {
+        alert('Unable to update locally for future use')
+        }
+      }
     
 
     const onClickHandler = () => {
          
-        if(enteredName.length > 0 && enteredAddress.length > 0)
+        if(enteredName.length > 0 && enteredAddress.length > 0 && enteredNumber.length == 10)
         {
           dispatch(AddName(enteredName))
           dispatch(AddAddress(enteredAddress))
+          dispatch(AddPhoneNumber(enteredNumber))
+          saveData(enteredName, enteredAddress, enteredNumber)
           navigation.goBack()
         }
   
         else
         {
-        alert("Can't leave any field blank");
+        alert("Can't leave any field blank or 10 digit number required");
         }
              }
     
@@ -48,6 +66,12 @@ function EditDetailsScreen({navigation}){
                <Text style={styles.text}>Name  :   </Text>
                <TextInput style={styles.inputcontainer} onChangeText={nameInputHandler}
                 value={enteredName}/>
+        </View >
+ 
+        <View style={styles.phonenumbercontainer}>
+               <Text style={styles.text}>Number : </Text>
+               <TextInput style={styles.inputcontainer} keyboardType = 'numeric' maxLength={10}  onChangeText={numberInputHandler}
+                value={enteredNumber}/>
         </View >
     
         <View style={styles.addresscontainer}>
@@ -72,6 +96,16 @@ const styles= StyleSheet.create({
     },
 
     namecontainer :{
+        position:'absolute',
+        bottom: "65%",
+        width:'100%',
+        flexDirection : 'row',
+        justifyContent:"space-around"
+
+    },
+
+    
+    phonenumbercontainer :{
         position:'absolute',
         bottom: "50%",
         width:'100%',

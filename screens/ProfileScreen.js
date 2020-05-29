@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet,View,Text, Button} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -11,6 +11,7 @@ function ProfileScreen({navigation}) {
    
     const name = useSelector(state => state.name)
     const address = useSelector(state => state.address)
+    const number = useSelector(state => state.phone_number)
 
     return(
   <View style={styles.screen}>
@@ -28,6 +29,11 @@ function ProfileScreen({navigation}) {
 
       <View style={styles.nameContainer}>
                 <Text style={styles.nametext}>{name}</Text>
+      </View>
+
+      <View style={styles.numberContainer}>
+                <Text style={styles.descriptiontext}>Contact number  ~  </Text> 
+                <Text style={styles.numbertext}>{number}</Text>         
       </View>
 
       <View style={styles.addressContainer}>
@@ -64,6 +70,14 @@ const styles= StyleSheet.create({
     fontSize : 18,
     color: 'black',
     fontWeight :'bold',
+  },
+
+  numbertext :{
+    fontFamily : 'Roboto',
+    fontSize : 19,
+    fontWeight :'bold',
+    color: Colors.primary
+    
   },
 
   addresstext :{
@@ -113,9 +127,18 @@ screen: {
 
 },
 
+numberContainer :{
+    
+  marginTop : '25%',
+  width:'100%',
+  flexDirection : 'row',
+  justifyContent:"center",
+  flexWrap : 'wrap'
+},
+
 addressContainer :{
     
-    marginTop : '20%',
+    marginTop : '15%',
     width:'100%',
     flexDirection : 'row',
     justifyContent:"center",

@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import {AddName, AddAddress} from '../redux/actions'
 import store from '../redux/store'
 import {useSelector, useDispatch} from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 
@@ -14,8 +15,19 @@ function InputDetailsScreen({navigation}){
     
     const dispatch = useDispatch()
 
+
     const[enteredName, setEnteredName] = useState('');
     const[enteredAddress, setEnteredAddress] = useState('');
+
+    const saveData = async () => {
+        try {
+          await AsyncStorage.setItem('storeName', enteredName)
+          await AsyncStorage.setItem('storeAddress', enteredAddress)
+        } catch (e) {
+        alert('Unable to store locally for future use')
+        }
+      }
+    
 
     const nameInputHandler = inputText => {
         setEnteredName(inputText);
@@ -32,6 +44,7 @@ function InputDetailsScreen({navigation}){
         {
           dispatch(AddName(enteredName))
           dispatch(AddAddress(enteredAddress))
+          saveData(enteredName, enteredAddress)
           navigation.replace('HomeScreen')
         }
   
