@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -55,6 +55,7 @@ function InputDetailsScreen({navigation}){
              }
     
    return(
+    <KeyboardAvoidingView  behavior="height" style={styles.keyboardstyle}>
        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.screen}>
         <View style={styles.namecontainer}>
@@ -73,6 +74,7 @@ function InputDetailsScreen({navigation}){
         </View>
     </View>
     </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
    );
 
 };
@@ -83,7 +85,12 @@ const styles= StyleSheet.create({
      flex :1,
      backgroundColor : Colors.primary
     },
-
+   
+    keyboardstyle : 
+    {
+        flex : 1
+    },
+    
     namecontainer :{
         position:'absolute',
         bottom: "50%",

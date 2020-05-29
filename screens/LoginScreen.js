@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, Alert} from 'react-native';
+import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, Alert,  KeyboardAvoidingView} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -46,7 +46,7 @@ function LoginScreen({navigation}){
         }
   
      return(
-
+    <KeyboardAvoidingView  behavior="height" style={styles.keyboardstyle}>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
      <View style={styles.screen}>
 
@@ -69,6 +69,7 @@ function LoginScreen({navigation}){
 
      </View>
     </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
 
     );
 };
@@ -79,6 +80,11 @@ const styles= StyleSheet.create({
     {
      flex :1,
      backgroundColor : Colors.primary
+    },
+
+    keyboardstyle : 
+    {
+        flex : 1
     },
 
     hellocontainer :{
