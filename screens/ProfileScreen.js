@@ -1,17 +1,44 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet,View,Text, Button} from 'react-native';
+import {StyleSheet,View,Text, Button, Alert} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux'
+import {clear_cart} from '../redux/actions'
 import store from '../redux/store'
+import AsyncStorage from '@react-native-community/async-storage';
 
 function ProfileScreen({navigation}) {
+    
+    const dispatch = useDispatch()
    
     const name = useSelector(state => state.name)
     const address = useSelector(state => state.address)
     const number = useSelector(state => state.phone_number)
+
+    const logout =  () => {
+      Alert.alert(  
+        'Are you sure?',  
+        'Confirm Logout',  
+         [  
+          { text: 'No', onPress: () => {},  style: 'cancel',  },  
+          { text: 'Yes', onPress: () => {  redirect()    }              },  
+         ],
+
+          { cancelable: true } 
+          );  
+     
+    }
+
+    const redirect = () => {
+      navigation.reset({
+        index: 0,
+         routes: [{ name: 'LogoutScreen' }],
+       });
+       dispatch(clear_cart())
+    }
+
 
     return(
   <View style={styles.screen}>
@@ -44,9 +71,9 @@ function ProfileScreen({navigation}) {
                 <Text style={styles.addresstext}>{address}</Text>         
       </View>
 
-     
-      <View style={styles.editbutton}>
-          <Button title="Edit details" color={Colors.primary} onPress={() => navigation.navigate('EditDetailsScreen')} />
+      <View style={styles.buttonContainer}>
+          <Button title="   Logout   " color = 'red' onPress={() => logout() } />
+          <Button title="Edit details" color='black' onPress={() => navigation.navigate('EditDetailsScreen')} />
       </View>
 
   </View>
@@ -102,14 +129,24 @@ const styles= StyleSheet.create({
     
   },
 
- editbutton :{
-     flexDirection: 'row',
-     position: 'absolute',
-     bottom: '6%',
-     width:'100%',
-     justifyContent:'center',
-     alignItems :'center'
+buttonContainer :{
+    flexDirection: 'row',
+    width:'100%',
+    justifyContent: "space-around",
+    position: 'absolute',
+    bottom: '6%',
+  
 },
+
+//  editbutton :{
+//      position: 'absolute',
+//      bottom: '6%',
+// },
+
+// logoutbutton :{
+//   position: 'absolute',
+//   bottom: '6%',
+// },
 topcontainer : {
     backgroundColor : Colors.primary
 },

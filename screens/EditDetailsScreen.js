@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView } from 'react-native';
+import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -60,32 +60,46 @@ function EditDetailsScreen({navigation}){
              }
     
    return(
-       <KeyboardAvoidingView  behavior="height" style={styles.keyboardstyle}>
-       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.screen}>
+    <ScrollView style = {styles.screen} keyboardShouldPersistTaps='always'>
+
+    <TouchableWithoutFeedback onPress = {Keyboard.dismiss}>
+    <View style = { styles.screen}>
+
         <View style={styles.namecontainer}>
-               <Text style={styles.text}>Name  :   </Text>
-               <TextInput style={styles.inputcontainer} onChangeText={nameInputHandler}
+               <Text style={styles.text}>Name</Text>
+        </View >
+               
+        <TextInput style={styles.nameinputcontainer} onChangeText={nameInputHandler}
                 value={enteredName}/>
-        </View >
- 
-        <View style={styles.phonenumbercontainer}>
-               <Text style={styles.text}>Number : </Text>
-               <TextInput style={styles.inputcontainer} keyboardType = 'numeric' maxLength={10}  onChangeText={numberInputHandler}
+
+        <View style={styles.numbercontainer}>
+               <Text style={styles.text}>Contact Number</Text>
+         </View >
+
+         <TextInput style={styles.numberinputcontainer} keyboardType = 'numeric' maxLength={10}  onChangeText={numberInputHandler}
                 value={enteredNumber}/>
-        </View >
-    
-        <View style={styles.addresscontainer}>
-               <Text style={styles.text}>Address  :</Text>
-               <TextInput style={styles.inputcontainer} onChangeText={addressInputHandler}
-                value={enteredAddress}/>
+        
+        
+         <View style={styles.addresscontainer}>
+               <Text style={styles.text}>Address</Text>
         </View>
+               
+        <TextInput style={styles.addressinputcontainer} onChangeText={addressInputHandler}
+                value={enteredAddress}/>
+
+        
         <View style={styles.buttoncontainer}>
         <MaterialCommunityIcons.Button name='arrow-right-bold-circle-outline' size={60} color='white' backgroundColor={Colors.primary} onPress={() => onClickHandler() }/>
         </View>
+
     </View>
     </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+
+    </ScrollView>
+ 
+
+    
+
    );
 
 };
@@ -96,42 +110,33 @@ const styles= StyleSheet.create({
      flex :1,
      backgroundColor : Colors.primary
     },
-
-    keyboardstyle : 
-    {
-        flex : 1
-    },
-
-    namecontainer :{
-        position:'absolute',
-        bottom: "65%",
-        width:'100%',
-        flexDirection : 'row',
-        justifyContent:"space-around"
-
-    },
-
     
-    phonenumbercontainer :{
-        position:'absolute',
-        bottom: "50%",
+    namecontainer :{
+        marginTop : '20%',
         width:'100%',
-        flexDirection : 'row',
-        justifyContent:"space-around"
+        justifyContent: 'center',
+        alignItems : 'center'
+
+    },
+
+    numbercontainer :{
+        marginTop : '20%',
+        width:'100%',
+        justifyContent: 'center',
+        alignItems : 'center'
 
     },
 
     addresscontainer :{
 
-        position:'absolute',
-        bottom: '35%',
+        marginTop : '20%',
         width:'100%',
-        flexDirection : 'row',
-        justifyContent:"space-around"
+        justifyContent: 'center',
+        alignItems : 'center'
 
     },
 
-    inputcontainer : {
+    nameinputcontainer : {
         paddingHorizontal:5,
         backgroundColor:'white',
         borderRadius : 10,
@@ -140,19 +145,48 @@ const styles= StyleSheet.create({
         width:'50%',
         height: 50,
         elevation:1,
-        textAlign:'center'
+        textAlign:'center',
+        marginHorizontal : '25%',
+        marginTop : '5%'
+    },
+
+    numberinputcontainer : {
+        paddingHorizontal:5,
+        backgroundColor:'white',
+        borderRadius : 10,
+        borderColor: 'white',
+        borderWidth:1,
+        width:'60%',
+        height: 50,
+        elevation:1,
+        textAlign:'center',
+        marginHorizontal : '20%',
+        marginTop : '5%'
+    },
+
+    addressinputcontainer : {
+        paddingHorizontal:5,
+        backgroundColor:'white',
+        borderRadius : 10,
+        borderColor: 'white',
+        borderWidth:1,
+        width:'70%',
+        height: 50,
+        elevation:1,
+        textAlign:'center',
+        marginHorizontal : '15%',
+        marginTop : '5%'
     },
 
     text :{
         fontFamily : 'Roboto',
-        fontSize : 20,
+        fontSize : 22,
         fontWeight :'bold',
         color:'white'
     },
 
     buttoncontainer :{
-        position:'absolute',
-        bottom:'6%',
+        marginTop : '10%',
         width:'100%',
         justifyContent:'center',
         alignItems:'center'

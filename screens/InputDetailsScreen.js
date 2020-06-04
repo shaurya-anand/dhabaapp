@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, ScrollView} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -55,26 +55,43 @@ function InputDetailsScreen({navigation}){
              }
     
    return(
-    <KeyboardAvoidingView  behavior="height" style={styles.keyboardstyle}>
-       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.screen}>
+   
+
+    <View style = {styles.screen}>
+    <ScrollView contentContainerStyle= {{flexGrow : 1}} keyboardShouldPersistTaps='always'>
+    <TouchableWithoutFeedback onPress = {Keyboard.dismiss}>
+    <View style = { styles.screen}>
+
         <View style={styles.namecontainer}>
-               <Text style={styles.text}>Name  :   </Text>
-               <TextInput style={styles.inputcontainer} onChangeText={nameInputHandler}
-                value={enteredName}/>
+               <Text style={styles.text}>Name</Text>
         </View >
+
+         <View style={styles.nameinputcontainer}>     
+        <TextInput style={styles.nameinput} onChangeText={nameInputHandler}
+                value={enteredName}/>
+        </View> 
     
         <View style={styles.addresscontainer}>
-               <Text style={styles.text}>Address  :</Text>
-               <TextInput style={styles.inputcontainer} onChangeText={addressInputHandler}
+               <Text style={styles.text}>Address</Text>
+        </View>
+
+         <View style={styles.addressinputcontainer}>       
+        <TextInput style={styles.addressinput} onChangeText={addressInputHandler}
                 value={enteredAddress}/>
         </View>
+        
         <View style={styles.buttoncontainer}>
         <MaterialCommunityIcons.Button name='arrow-right-bold-circle-outline' size={60} color='white' backgroundColor={Colors.primary} onPress={() => onClickHandler() }/>
         </View>
+
     </View>
     </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </ScrollView>
+    </View>
+
+ 
+    
+    
    );
 
 };
@@ -82,35 +99,28 @@ function InputDetailsScreen({navigation}){
 const styles= StyleSheet.create({
     screen :
     {
-     flex :1,
+     flex:1,
      backgroundColor : Colors.primary
-    },
-   
-    keyboardstyle : 
-    {
-        flex : 1
     },
     
     namecontainer :{
-        position:'absolute',
-        bottom: "50%",
+        marginTop : '30%',
         width:'100%',
-        flexDirection : 'row',
-        justifyContent:"space-around"
+        justifyContent: 'center',
+        alignItems : 'center'
 
     },
 
     addresscontainer :{
 
-        position:'absolute',
-        bottom: '35%',
+        marginTop : '30%',
         width:'100%',
-        flexDirection : 'row',
-        justifyContent:"space-around"
+        justifyContent: 'center',
+        alignItems : 'center'
 
     },
 
-    inputcontainer : {
+    nameinput : {
         paddingHorizontal:5,
         backgroundColor:'white',
         borderRadius : 10,
@@ -119,19 +129,42 @@ const styles= StyleSheet.create({
         width:'50%',
         height: 50,
         elevation:1,
-        textAlign:'center'
+        textAlign:'center',
+        marginHorizontal : '25%',
+        
+    },
+
+    nameinputcontainer : {
+        marginTop : '10%'
+    },
+
+    addressinputcontainer : {
+        marginTop : '10%'
+    },
+
+    addressinput : {
+        paddingHorizontal:5,
+        backgroundColor:'white',
+        borderRadius : 10,
+        borderColor: 'white',
+        borderWidth:1,
+        width:'70%',
+        height: 50,
+        elevation:1,
+        textAlign:'center',
+        marginHorizontal : '15%',
+       
     },
 
     text :{
         fontFamily : 'Roboto',
-        fontSize : 20,
+        fontSize : 22,
         fontWeight :'bold',
         color:'white'
     },
 
     buttoncontainer :{
-        position:'absolute',
-        bottom:'6%',
+        marginTop : '20%',
         width:'100%',
         justifyContent:'center',
         alignItems:'center'

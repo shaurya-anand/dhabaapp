@@ -1,30 +1,91 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, Alert,  KeyboardAvoidingView} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, Alert, ScrollView} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import {AddPhoneNumber} from '../redux/actions'
+import {AddphoneNumber} from '../redux/actions'
 import store from '../redux/store'
 import {useSelector, useDispatch} from 'react-redux'
 import AsyncStorage from '@react-native-community/async-storage';
+import firebase from '../firebase'
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 
 
 function LoginScreen({navigation}){
 
     const dispatch = useDispatch()
 
-    const[enteredValue, setEnteredValue] = useState('');
+    const[phoneNumber, setPhoneNumber] = useState('');
+    const[code, setCode] = useState('')
+    const [verificationId, setVerificationId] = useState(null);
+    const recaptchaVerifier = useRef(null);
 
-    const numberInputHandler = inputText => {
-        setEnteredValue(inputText.replace(/[^0-9]/g, ''));
+    const phoneNumberInputhandler = inputText => {
+        setPhoneNumber(inputText.replace(/[^0-9]/g, ''));
      };  
+
+    const codeInputhandler = inputText => {
+        setCode(inputText.replace(/[^0-9]/g, ''));
+     }; 
 
     const saveData = async () => {
         try {
-          await AsyncStorage.setItem('storeNumber', enteredValue)
+          await AsyncStorage.setItem('storeNumber', phoneNumber)
+          await AsyncStorage.setItem('storeAuthNumber', phoneNumber)
+          await AsyncStorage.setItem('storeIsLoggedIn', 'true')
+          
         } catch (e) {
         alert('Unable to store locally for future use')
+        }
+      }
+    
+      const sendVerification = async  () => {
+        try{
+        const phoneProvider = new firebase.auth.PhoneAuthProvider();
+        await phoneProvider
+          .verifyPhoneNumber('+91'+ phoneNumber, recaptchaVerifier.current)
+          .then(setVerificationId);
+
+            Alert.alert(  
+            'Code sent',  
+            'Kindly wait for 10 seconds before resending or try a different number.',  
+             [  
+              { text: 'Ok', style: 'cancel'  },  
+             
+             ],
+  
+              { cancelable: true } 
+              );
+        }
+
+        catch(e) {
+            alert('Unable to send request. Kindly check internet connection or try again later.')
+        }
+      };
+
+      const confirmCode = async () => {
+
+        try{
+          const credential = firebase.auth.PhoneAuthProvider.credential(
+          verificationId,
+          code
+        );
+
+        await firebase
+          .auth()
+          .signInWithCredential(credential)
+          .then((result) => {
+            // Do something with the results here
+          saveData(phoneNumber);
+          navigation.replace('InputDetailsScreen');
+
+          });
+
+        }
+
+        catch(e) {
+            alert('Wrong OTP')
         }
       }
     
@@ -32,12 +93,11 @@ function LoginScreen({navigation}){
     const onClickHandler = () => {
          
     
-      if(enteredValue.length == 10)
+      if(phoneNumber.length == 10)
       {
-        dispatch(AddPhoneNumber(enteredValue));
-        saveData(enteredValue)
-        navigation.replace('InputDetailsScreen');
-      }
+        sendVerification()
+        setPhoneNumber('+91' + phoneNumber)
+        }
 
       else
       {
@@ -46,30 +106,50 @@ function LoginScreen({navigation}){
         }
   
      return(
-    <KeyboardAvoidingView  behavior="height" style={styles.keyboardstyle}>
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-     <View style={styles.screen}>
+    <View style = {styles.screen}>
+    <ScrollView contentContainerStyle= {{flexGrow : 1}} keyboardShouldPersistTaps='always'>
+    <TouchableWithoutFeedback onPress = {Keyboard.dismiss}>
+    <View style = { styles.screen}>
+        <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebase.app().options}/>
 
-         <View style={styles.hellocontainer}>
-                <Text style={styles.hellotext}>Hello!</Text>
-         </View >
+        <View style = {styles.hellocontainer}>
+              <Text style={styles.hellotext}>Hello!</Text>
+        </View> 
      
-         <View style={styles.requestcontainer}>
-                <Text style={styles.text}>Please enter phone number</Text>
-         </View>
+        <View style = {styles.requestnumbercontainer}>
+        <Text style={styles.requesttext}>Please enter 10 digit phone number</Text>
+        </View>
+        
+        <View style = {styles.inputnumbercontainer} >
+        <TextInput style={styles.numberinput} keyboardType = 'numeric' maxLength={13} placeholder="_ _ _ _ _ _ _ _ _ _"  onChangeText={phoneNumberInputhandler}
+                value={phoneNumber}    />
+        </View>
 
-         <View style={styles.inputcontainer}>
-                <TextInput style={styles.input} keyboardType = 'numeric' maxLength={10}  onChangeText={numberInputHandler}
-                value={enteredValue}    />
+        <View style={styles.sendcodebutton}>
+        <Button title="SEND CODE" color={'black'} onPress={() => onClickHandler()}/>
+        </View> 
+        
+         <View style = {styles.requestcodecontainer}>
+        <Text style={styles.requesttext}>Enter the code sent via SMS</Text>
+        </View>
+
+         <View style={styles.inputcodecontainer}>
+                <TextInput style={styles.codeinput} keyboardType = 'numeric' maxLength={10} placeholder="Code"  onChangeText={codeInputhandler}
+                value={code}    />
          </View>
 
          <View style={styles.buttoncontainer}>
-         <MaterialCommunityIcons.Button name='arrow-right-bold-circle-outline' size={60} color='white' backgroundColor={Colors.primary} onPress={() => onClickHandler()}/>
+         <MaterialCommunityIcons.Button name='arrow-right-bold-circle-outline' size={60} color='white' backgroundColor={Colors.primary}  onPress={confirmCode}/>
          </View>
 
-     </View>
+    
+      </View>
     </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </ScrollView>
+    </View>
+    
 
     );
 };
@@ -78,8 +158,8 @@ const styles= StyleSheet.create({
 
     screen :
     {
-     flex :1,
-     backgroundColor : Colors.primary
+      flex : 1,
+     backgroundColor : Colors.primary,
     },
 
     keyboardstyle : 
@@ -88,34 +168,56 @@ const styles= StyleSheet.create({
     },
 
     hellocontainer :{
-        position:'absolute',
-        bottom : '65%',
+        marginTop : '20%',
         width:'100%',
-        flexDirection : 'row',
-        justifyContent:"space-around",
+        justifyContent: "center",
+        alignItems : 'center',
         elevation: 5
 
     },
 
-    requestcontainer :{
-        position:'absolute',
-        bottom:'40%',
+    requestnumbercontainer :{
+        marginTop : '15%',
         width:'100%',
-        flexDirection : 'row',
-        justifyContent:"space-around"
+        justifyContent:"space-around",
+        alignItems : 'center'
 
     },
     
-    inputcontainer : {
-        position:'absolute',
-        bottom: '28%',
-        width : '100%',
-        flexDirection : 'row',
-        justifyContent : 'space-around'
+    inputnumbercontainer : {
+      marginTop : '10%',
+      width:'100%',
+      justifyContent:"space-around",
+      alignItems : 'center'
 
     },
 
-    input : {
+    sendcodebutton :{
+        marginTop : '5%',
+        width: '100%',
+        justifyContent:'center',
+        alignItems :'center',
+        elevation : 10
+    
+   },
+
+    requestcodecontainer :{
+      marginTop : '20%',
+      width:'100%',
+      justifyContent:"space-around",
+      alignItems : 'center'
+
+    },
+
+    inputcodecontainer : {
+      marginTop : '10%',
+      width:'100%',
+      justifyContent:"space-around",
+      alignItems : 'center'
+
+    },
+
+    numberinput : {
         paddingHorizontal:5,
         backgroundColor:'white',
         borderRadius : 10,
@@ -127,24 +229,38 @@ const styles= StyleSheet.create({
         
     }, 
 
-    text :{
+    codeinput : {
+        paddingHorizontal:5,
+        backgroundColor:'white',
+        borderRadius : 10,
+        borderColor: 'white',
+        borderWidth:1,
+        width:'30%',
+        height: 50,
+        textAlign:'center',
+        
+    }, 
+
+    requesttext :{
         fontFamily : 'Roboto',
         fontSize : 20,
         fontWeight :'bold',
-        color:'white'
+        color:'white',
+        textAlign : 'center',
+        
     },
 
     hellotext :{
         fontFamily : 'Roboto',
         fontSize : 50,
         fontWeight :'bold',
-        color:'white'
+        color:'white',
+        textAlign : 'center',
     },
 
 
     buttoncontainer :{
-        position:'absolute',
-        bottom: '6%',
+        marginTop : '5%',
         width:'100%',
         justifyContent:'center',
         alignItems:'center'

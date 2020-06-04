@@ -59,9 +59,10 @@ const [filteredData, setFilteredData] = useState([]);
 const [temp, setTemp] = useState(0)
 
 useEffect(()=>{
-  setInterval(()=>{
-    setTemp((prevTemp)=>prevTemp+1)
+ const interval = setInterval(()=>{
+    setTemp( temp => temp+1)
   }, 2000)
+return () => clearInterval(interval);
 }, [])
 
 const fetchdata = async() =>{

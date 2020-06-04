@@ -10,11 +10,12 @@ function InitialScreen({navigation}){
     
 const readData = async () => {
     try {
+      const isLoggedIn = await AsyncStorage.getItem('storeIsLoggedIn')
       const Number = await AsyncStorage.getItem('storeNumber')
       const Name = await AsyncStorage.getItem('storeName')
       const Address = await AsyncStorage.getItem('storeAddress')
   
-      if (Number !== null && Name !== null && Address !== null) {
+      if ( isLoggedIn == 'true' && Number !== null && Name !== null && Address !== null) {
         navigation.replace('HomeScreen');
       }
 
@@ -47,3 +48,4 @@ const styles = StyleSheet.create({
     });
 
 export default InitialScreen
+

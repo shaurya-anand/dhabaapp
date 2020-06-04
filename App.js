@@ -14,6 +14,7 @@ import HomeScreen from './screens/HomeScreen';
 import OrderConfirmedScreen from './screens/OrderConfirmedScreen';
 import InitialScreen from './screens/InitialScreen';
 import EditDetailsScreen from './screens/EditDetailsScreen';
+import LogoutScreen from './screens/LogoutScreen';
 import {Provider} from 'react-redux';
 import store from './redux/store'
 import { StackActions, NavigationActions } from 'react-navigation'
@@ -41,6 +42,7 @@ function App() {
         <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
         <Stack.Screen name='EditDetailsScreen' component={EditDetailsScreen}/>
         <Stack.Screen name='OrderConfirmedScreen' component={OrderConfirmedScreen}/>
+        <Stack.Screen name='LogoutScreen' component={LogoutScreen}/>
     </Stack.Navigator>
     
     </NavigationContainer>
