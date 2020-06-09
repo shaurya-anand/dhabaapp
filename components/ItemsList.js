@@ -114,9 +114,9 @@ list :
 
     {  id : '54', name : 'Matar paneer full', price : 130, category : 3, available : true },
 
-    {  id : '55', name : 'Chilli paneer half', price : 60, category : 3, available : true },
+    {  id : '55', name : 'Chilli paneer half', price : 100, category : 3, available : true },
 
-    {  id : '56', name : 'Chilli paneer half', price : 60, category : 3, available : true },
+    {  id : '56', name : 'Chilli paneer full', price : 180, category : 3, available : true },
 
 
     {  id : '57', name : 'Plain rice half', price : 40, category : 4, available : true,  },

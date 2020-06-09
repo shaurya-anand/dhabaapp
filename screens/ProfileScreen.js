@@ -166,7 +166,7 @@ screen: {
 
 numberContainer :{
     
-  marginTop : '25%',
+  marginTop : '22%',
   width:'100%',
   flexDirection : 'row',
   justifyContent:"center",
@@ -175,7 +175,7 @@ numberContainer :{
 
 addressContainer :{
     
-    marginTop : '15%',
+    marginTop : '13%',
     width:'100%',
     flexDirection : 'row',
     justifyContent:"center",
@@ -184,7 +184,7 @@ addressContainer :{
 
 addressValueContainer :{
     
-    marginTop : '3%',
+    marginTop : '2%',
     width:'100%',
     flexDirection : 'row',
     justifyContent:"space-around",

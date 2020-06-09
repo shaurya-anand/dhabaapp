@@ -7,6 +7,8 @@ import NetInfo from '@react-native-community/netinfo';
 import {useSelector, useDispatch} from 'react-redux'
 import store from '../redux/store'
 import {clear_cart} from '../redux/actions'
+import firebase from '../firebase'
+import {db} from'../firebase'
 
 function ItemsDisplay(){
   
@@ -34,17 +36,17 @@ function ItemsDisplay(){
   },[isInternetReachable])
 
 function categoryselector (item)  {
-switch(item.category) {
+switch( String(item.category)[0] ) {
 
-  case 1 : return styles.name1
+  case '1' : return styles.name1
   break;
-  case 2 : return styles.name2
+  case '2' : return styles.name2
   break;
-  case 3 : return styles.name3
+  case '3' : return styles.name3
   break;
-  case 4 : return styles.name4
+  case '4' : return styles.name4
   break;
-  case 5 : return styles.name5
+  case '5' : return styles.name5
   break;
   default : return styles.name2
   
@@ -54,68 +56,48 @@ switch(item.category) {
 const [isLoading, setLoading] = useState(true);
 const [isLoading2, setLoading2] = useState(true);
 const [data, setData] = useState([]);
-const [filteredData, setFilteredData] = useState([]);
 
-const [temp, setTemp] = useState(0)
 
-useEffect(()=>{
- const interval = setInterval(()=>{
-    setTemp( temp => temp+1)
-  }, 2000)
-return () => clearInterval(interval);
-}, [])
+useEffect(() => {
 
-const fetchdata = async() =>{
+  try {
+  
+    return db.collection('storeitems').where('available', '==', true).orderBy('category', 'asc').onSnapshot(querysnapshot => {
 
-try {
-  fetch('https://my-json-server.typicode.com/shaurya-anand/jsontest2/db')
-    .then((response) => response.json())
-    .then((json) => setData(json.list))
-    .then(() => setLoading(false))
-    .catch(() => setLoading(true))
-  }
+      if (querysnapshot.empty) {
+        setLoading2(false);
+      }
 
-catch(error) {
-setLoading(true)
-}
+      const items = [];
+        querysnapshot.forEach(doc => {
+        const { id, name, price, category, available} = doc.data();
+        items.push({id, name, price, category, available});
 
-} 
+                                  });
+      
+     setData(items)
 
-const filter = () =>
-{
-tempdata= []
-count = 0;
-for(i=0; i< data.length; i++)
-{
-  if(data[i].available)
-  {
-    tempdata.push(data[i])
-  }
-
-  if(i>0)
-  {
-    count = count+1
-  }
-
-}
-setFilteredData(tempdata)
-if(count!=0)
-{
-  setLoading2(false)
-}
+     if(isLoading)
+     {
+     setLoading(false)
+     }
+  
+  });
 }
   
-useEffect(() => {
-fetchdata()
-filter()
-}, [temp]);
+  catch(error) {
+  setLoading(true)
+  }
+
+}, []);
+
 
  const ListEmpty = () => {
   if(!isLoading2) {
   return (
     //View to show when list is empty
     <View style={styles.EmptyContainer}>
-      <Text style = {styles.storeClosedText}>    Band hai abhi !    </Text>
+      <Text style = {styles.storeClosedText}>    Abhi nahi !    </Text>
     </View>
   );
   }
@@ -136,8 +118,8 @@ filter()
             <FlatList 
            contentContainerStyle={{ paddingBottom: 250}}
            keyExtractor={(item) => item.id}
-           data={filteredData}
-           extraData={filteredData}
+           data={data}
+           extraData={data}
            ListEmptyComponent={ListEmpty()}
            renderItem = { ({item}) =>
               (

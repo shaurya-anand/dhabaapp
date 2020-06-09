@@ -20,6 +20,7 @@ function CartScreen({navigation}){
 
   var cart = useSelector(state => state.cart)
   var cart_total = useSelector(state => state.cart_total)
+  var phone_number = useSelector(state => state.phone_number)
   const locationavailable = useSelector(state => state.locationavailable)
   const dispatch = useDispatch()
   var dis = 6000
@@ -75,7 +76,7 @@ function CartScreen({navigation}){
 
       else if (dis >= 5000)
       {
-        alert('You are too far !       ︶︹︺                    Delivery radius is 5 kms. If within 5 kms, kindly check location permissions and restart app.')
+        alert('You are too far !              ︶︹︺                    Delivery radius is 5 kms. If within 5 kms, kindly check location permissions and restart app.')
       }
 
        else
@@ -135,7 +136,7 @@ function CartScreen({navigation}){
                 </View>
 
                 <View style={styles.foodicon}>
-                       <MaterialCommunityIcons name='silverware-fork-knife' size={64} color='white' backgroundColor={Colors.primary}/>
+                       <MaterialCommunityIcons name='silverware-fork-knife' size={56} color='white' backgroundColor={Colors.primary}/>
                 </View>
 
                 <View style={styles.fakeicon}>
@@ -185,6 +186,11 @@ function CartScreen({navigation}){
 
         <View style= {styles.carttotal}>
           <Text style = {styles.carttotalText}> Total  ₹ {cart_total} </Text>
+        </View>
+
+        <View style= {styles.infoContainer}>
+          <Text style = {styles.infoNumberText}> You will be contacted at {phone_number}</Text>
+          <Text style = {styles.infoPaymentText}> Pay on delivery via cash or wallet</Text>
         </View>
       
          <View style={styles.confirmbutton}>
@@ -241,7 +247,7 @@ const styles= StyleSheet.create({
           confirmbutton :{
             position: 'absolute',
             width: '100%',
-            bottom: '6%',
+            bottom: '5%',
             justifyContent:'center',
             alignItems :'center',
         
@@ -304,16 +310,14 @@ const styles= StyleSheet.create({
         color:'black'
         },
 
-        
-
-          subtotal : {
+       subtotal : {
             color:'black',
             alignItems : 'center',
             color : 'white'
             },
 
         cartlist : {
-          height : '40%',
+          height : '35%',
           marginTop : 40,
           width: '100%',
           //backgroundColor : '#FEDDDD',
@@ -338,6 +342,29 @@ const styles= StyleSheet.create({
           paddingHorizontal : 8,
 
         },
+
+        infoContainer : {
+
+          marginTop :'5%',
+          justifyContent : 'center',
+          alignItems : 'center'
+        },
+
+        infoNumberText : {
+      
+          fontSize : 16,
+          color : 'red',
+          fontWeight : 'bold',
+          flexWrap : 'wrap'
+           },
+
+           
+        infoPaymentText : {
+      
+          fontSize : 16,
+          color : 'black',
+          flexWrap : 'wrap'
+           },
 
 });
 
