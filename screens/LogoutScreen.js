@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet,View,Text, Image} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import {createStackNavigator} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 function LogoutScreen({navigation}){

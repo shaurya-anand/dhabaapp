@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet,View,Text, Button, Alert} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {createStackNavigator} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux'
 import {clear_cart} from '../redux/actions'
 import store from '../redux/store'
@@ -49,26 +47,25 @@ function ProfileScreen({navigation}) {
       </View>
       
       <View style={styles.usericon}>
-      <MaterialCommunityIcons name='account' size={110} color='white' backgroundColor={Colors.primary}/>
+      <MaterialCommunityIcons name='account' size={100} color='white' backgroundColor={Colors.primary}/>
       </View>
 
       </View>
 
       <View style={styles.nameContainer}>
-                <Text style={styles.nametext}>{name}</Text>
+                <Text style={styles.nametext}> {name} </Text>
       </View>
 
       <View style={styles.numberContainer}>
-                <Text style={styles.descriptiontext}>Contact number  ~  </Text> 
-                <Text style={styles.numbertext}>{number}</Text>         
+                <Text style={styles.numbertext}> {number} </Text>         
       </View>
 
       <View style={styles.addressContainer}>
-                <Text style={styles.descriptiontext}>- Address -</Text>         
+      <MaterialCommunityIcons name="home-heart" size={38} color="black" />       
       </View>
 
       <View style={styles.addressValueContainer}>
-                <Text style={styles.addresstext}>{address}</Text>         
+                <Text style={styles.addresstext}> {address} </Text>         
       </View>
 
       <View style={styles.buttonContainer}>
@@ -101,9 +98,9 @@ const styles= StyleSheet.create({
 
   numbertext :{
     fontFamily : 'Roboto',
-    fontSize : 19,
+    fontSize : 20,
     fontWeight :'bold',
-    color: Colors.primary
+    color: Colors.primary,
     
   },
 
@@ -138,15 +135,6 @@ buttonContainer :{
   
 },
 
-//  editbutton :{
-//      position: 'absolute',
-//      bottom: '6%',
-// },
-
-// logoutbutton :{
-//   position: 'absolute',
-//   bottom: '6%',
-// },
 topcontainer : {
     backgroundColor : Colors.primary
 },

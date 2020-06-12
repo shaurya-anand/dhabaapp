@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet,View,Text, Image} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import {createStackNavigator} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux'
+import {clear_cart} from '../redux/actions'
 
 function OrderConfirmedScreen({navigation}){
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        try {
+        dispatch(clear_cart())
+        }
+
+        catch(e) {
+            alert("Unable to clear cart")
+        }
+     },[])
+    
 
     return(
     <View style={styles.screen}>

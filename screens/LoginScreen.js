@@ -2,8 +2,6 @@ import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, Alert, ScrollView} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {createStackNavigator} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import {AddphoneNumber} from '../redux/actions'
 import store from '../redux/store'
 import {useSelector, useDispatch} from 'react-redux'
@@ -32,7 +30,7 @@ function LoginScreen({navigation}){
     const saveData = async () => {
         try {
           await AsyncStorage.setItem('storeNumber', phoneNumber)
-          await AsyncStorage.setItem('storeAuthNumber', phoneNumber)
+          await AsyncStorage.setItem('storeAuthNumber', '+91'+ phoneNumber)
           await AsyncStorage.setItem('storeIsLoggedIn', 'true')
           
         } catch (e) {
@@ -96,7 +94,7 @@ function LoginScreen({navigation}){
       if(phoneNumber.length == 10)
       {
         sendVerification()
-        setPhoneNumber('+91' + phoneNumber)
+        setPhoneNumber(phoneNumber)
         }
 
       else
@@ -128,7 +126,7 @@ function LoginScreen({navigation}){
         </View>
 
         <View style={styles.sendcodebutton}>
-        <Button title="SEND CODE" color={'black'} onPress={() => onClickHandler()}/>
+        <Button title='  SEND CODE  ' color={'black'} onPress={() => onClickHandler()}/>
         </View> 
         
          <View style = {styles.requestcodecontainer}>
@@ -168,7 +166,7 @@ const styles= StyleSheet.create({
     },
 
     hellocontainer :{
-        marginTop : '20%',
+        marginTop : 50,
         width:'100%',
         justifyContent: "center",
         alignItems : 'center',
@@ -177,7 +175,7 @@ const styles= StyleSheet.create({
     },
 
     requestnumbercontainer :{
-        marginTop : '15%',
+        marginTop : 70,
         width:'100%',
         justifyContent:"space-around",
         alignItems : 'center'
@@ -185,7 +183,7 @@ const styles= StyleSheet.create({
     },
     
     inputnumbercontainer : {
-      marginTop : '10%',
+      marginTop : 20,
       width:'100%',
       justifyContent:"space-around",
       alignItems : 'center'
@@ -193,16 +191,16 @@ const styles= StyleSheet.create({
     },
 
     sendcodebutton :{
-        marginTop : '5%',
+        marginTop : 10,
         width: '100%',
         justifyContent:'center',
-        alignItems :'center',
+        alignItems : 'center',
         elevation : 10
     
    },
 
     requestcodecontainer :{
-      marginTop : '20%',
+      marginTop : 70,
       width:'100%',
       justifyContent:"space-around",
       alignItems : 'center'
@@ -210,7 +208,7 @@ const styles= StyleSheet.create({
     },
 
     inputcodecontainer : {
-      marginTop : '10%',
+      marginTop : 20,
       width:'100%',
       justifyContent:"space-around",
       alignItems : 'center'
@@ -247,6 +245,7 @@ const styles= StyleSheet.create({
         fontWeight :'bold',
         color:'white',
         textAlign : 'center',
+        flexWrap: 'wrap'
         
     },
 
@@ -260,7 +259,7 @@ const styles= StyleSheet.create({
 
 
     buttoncontainer :{
-        marginTop : '5%',
+        marginTop : 10,
         width:'100%',
         justifyContent:'center',
         alignItems:'center'

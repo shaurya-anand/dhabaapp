@@ -1,11 +1,32 @@
-import React from 'react';
-import {StyleSheet,View,Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet,View,Text, FlatList} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {createStackNavigator} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { Entypo } from '@expo/vector-icons'; 
 
 function OrderHistoryScreen({navigation}) {
+
+    const[prevOrder, setPrevOrder] = useState([])
+
+    const readData = async () => {
+        try {
+          const order = await AsyncStorage.getItem('storeOrder')
+          setPrevOrder(JSON.parse(order))
+          if(order == null)
+          {
+            alert('No previous order found')
+          }
+        } 
+        catch (e) {
+            alert("No previous order or unable to retrieve")
+        }
+      }
+      
+      useEffect(() => {
+         readData()
+      },[])
+
 
     return(
 
@@ -32,7 +53,58 @@ function OrderHistoryScreen({navigation}) {
           <Text  style={styles.text}> Order History </Text>
         </View>
 
+      
     </View> 
+    
+    <View style = {styles.prevOrderContainer}>
+      <Text style = {styles.prevOrderText}> Previous Order </Text>
+    </View>
+
+    <View style = {styles.cartlist}>
+           <FlatList
+           backgroundColor={'F5F0F0'}
+           contentContainerStyle = {{paddingBottom : 20}}
+           keyExtractor={(item) => item.itemid}
+           data={prevOrder}
+           extraData = {prevOrder}
+           renderItem={({item}) =>
+              ( 
+              
+                
+               <View  style={styles.itemContainer}>
+
+                <View style={styles.nameContainer}>
+                        <Text style={styles.name}>{item.itemname}</Text>
+                </View>
+
+                <View style={styles.quantityContainer}>
+                       <Text style={styles.quantity}>{item.itemquantity}</Text>
+                       <Text style={styles.asterix}>   X   </Text>
+                       <Text style={styles.price}>₹ {item.itemprice} </Text>
+                </View>
+                
+                <View style={styles.subtotalContainer}>
+                        <Text style={styles.subtotal}>₹ {item.itemsubtotal}</Text>
+                </View>
+
+              </View>
+                         
+            
+              ) } />
+ 
+    </View>
+
+    <View style = {styles.helpContainer}>
+            <Entypo name="old-phone" size={24} color="black" />
+            <Text style = { styles.dhabaContactText}> Contact Dhaba</Text>
+            <Text style = { styles.dhabaNumberText} selectable={true} selectionColor={Colors.secondary}> 9958889933 | 9205011408 </Text>
+{/*  
+            <Text style = { styles.appContactText}> Report app error </Text>
+            <Text style = { styles.appEmailText}> himachalidhaba@gmail.com </Text> */}
+      
+    </View>
+        
+
 </View>
     );
 
@@ -80,7 +152,126 @@ const styles= StyleSheet.create({
 
         screen : {
             flex: 1
-        }
+        },
+
+        itemContainer : {
+            marginTop : 20,
+            flexDirection : 'row',
+            flex : 1,
+            width : '100%',
+            justifyContent: 'space-between',
+            
+           },
+    
+           nameContainer : {
+           flex : 3
+           },
+    
+           quantityContainer :{
+           flex : 2,
+           flexDirection : 'row',
+           alignItems : "center"
+           },
+        
+           subtotalContainer : {
+           flex : 1,
+           alignItems:"center",
+           justifyContent : 'center',
+           backgroundColor : Colors.primary,
+           marginLeft : 10,
+           marginRight : 10,
+           borderRadius : 6
+           },
+              
+           name : {
+           
+            marginLeft : 10,
+            fontFamily : 'serif',
+            fontSize : 15,
+            color : 'black',
+            fontWeight : 'bold'
+            },
+    
+              quantity : {
+              color:'black'
+              },
+    
+            asterix : {
+             color : Colors.primary,
+             fontSize : 10
+            },
+        
+           price : {
+            
+            color:'black'
+            },
+    
+           subtotal : {
+                color:'black',
+                alignItems : 'center',
+                color : 'white'
+                },
+    
+            cartlist : {
+              height : '35%',
+              marginTop : 16,
+              width: '100%',
+              backgroundColor : '#FEDDDD',
+              //backgroundColor : '#F5F0F0',
+              borderRadius : 25,
+            },
+
+            prevOrderContainer : {
+              marginTop : 24,
+              alignItems : 'center',
+              justifyContent : 'center',
+              
+            },
+
+            prevOrderText : 
+            {
+              fontFamily : 'Roboto',
+              color : 'red',
+              fontSize : 16,
+              fontWeight : 'bold'
+            },
+
+            helpContainer : {
+                width : '100%',
+                position: 'absolute',
+                bottom: 30,
+                justifyContent:'center',
+                alignItems : 'center'
+                
+            },
+
+            dhabaContactText : {
+            fontFamily : 'Roboto',
+            fontSize : 18,
+            fontWeight : 'bold'
+            },
+
+            appContactText : {
+              fontFamily : 'Roboto',
+              fontSize : 16,
+              fontWeight : 'bold',
+              marginTop : 5
+              
+            },
+
+           dhabaNumberText : {
+              fontFamily : 'Roboto',
+              fontSize : 18,
+              fontWeight : 'bold',
+              color : 'red'
+              },
+  
+          appEmailText : {
+                fontFamily : 'Roboto',
+                fontSize : 16,
+                fontWeight : 'bold',
+                color : 'gray'
+              }
      
 
 });

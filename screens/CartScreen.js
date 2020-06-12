@@ -2,16 +2,14 @@ import React,  { useState, useEffect } from 'react';
 import {Platform, StyleSheet,View,Text, Button, FlatList, Alert} from 'react-native';
 import Colors from '../constants/Colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {createStackNavigator} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux'
 import store from '../redux/store'
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import {update_location_to_true, update_location_to_false, clear_cart} from '../redux/actions'
-import { StackActions, NavigationActions } from 'react-navigation'
 import { getPreciseDistance} from 'geolib';
 import NetInfo from '@react-native-community/netinfo';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 
@@ -64,6 +62,14 @@ function CartScreen({navigation}){
 
   });
 
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem('storeOrder', JSON.stringify(cart))
+    } catch (e) {
+    alert('Unable to store locally for order history')
+    }
+  }
+
   const onClickHandler = () =>
   {
     if(locationavailable)
@@ -87,12 +93,10 @@ function CartScreen({navigation}){
            [  
             { text: 'No', onPress: () => {},  style: 'cancel',  },  
             { text: 'Yes', onPress: () => { 
-              navigation.reset({
-                                                            index: 0,
-                                                             routes: [{ name: 'OrderConfirmedScreen' }],
-                                                           });
-              dispatch(clear_cart())
-                                                           }
+                                           saveData()
+                                           navigation.reset({ index: 0, routes: [{ name: 'OrderConfirmedScreen' }], });
+                                          
+                                          }
             },  
            ],
 
@@ -189,12 +193,12 @@ function CartScreen({navigation}){
         </View>
 
         <View style= {styles.infoContainer}>
-          <Text style = {styles.infoNumberText}> You will be contacted at {phone_number}</Text>
-          <Text style = {styles.infoPaymentText}> Pay on delivery via cash or wallet</Text>
+          <Text style = {styles.infoNumberText}> You will be contacted at {phone_number} </Text>
+          <Text style = {styles.infoPaymentText}> Pay on delivery via cash or wallet </Text>
         </View>
       
          <View style={styles.confirmbutton}>
-          <Button title="Confirm Order" color={Colors.primary} onPress={() => onClickHandler()}/>
+          <Button title= '  Confirm Order  ' color={Colors.primary} onPress={() => onClickHandler()}/>
         </View>
 
 
@@ -245,11 +249,11 @@ const styles= StyleSheet.create({
           },
 
           confirmbutton :{
+            flexDirection : 'row',
             position: 'absolute',
             width: '100%',
             bottom: '5%',
-            justifyContent:'center',
-            alignItems :'center',
+            justifyContent: 'center',
         
        },
 
@@ -291,7 +295,7 @@ const styles= StyleSheet.create({
        
         marginLeft : 10,
         fontFamily : 'serif',
-        fontSize : 16,
+        fontSize : 15,
         color : 'black',
         fontWeight : 'bold'
         },
@@ -355,7 +359,8 @@ const styles= StyleSheet.create({
           fontSize : 16,
           color : 'red',
           fontWeight : 'bold',
-          flexWrap : 'wrap'
+          flexWrap : 'wrap',
+          fontFamily : 'Roboto'
            },
 
            
@@ -363,7 +368,8 @@ const styles= StyleSheet.create({
       
           fontSize : 16,
           color : 'black',
-          flexWrap : 'wrap'
+          flexWrap : 'wrap',
+          fontFamily: 'Roboto',
            },
 
 });

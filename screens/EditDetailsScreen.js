@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import {createStackNavigator} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import {AddName, AddAddress, AddPhoneNumber} from '../redux/actions'
 import store from '../redux/store'
 import {useSelector, useDispatch} from 'react-redux'
@@ -112,7 +110,7 @@ const styles= StyleSheet.create({
     },
     
     namecontainer :{
-        marginTop : '20%',
+        marginTop : 80,
         width:'100%',
         justifyContent: 'center',
         alignItems : 'center'
@@ -120,7 +118,7 @@ const styles= StyleSheet.create({
     },
 
     numbercontainer :{
-        marginTop : '20%',
+        marginTop : 60,
         width:'100%',
         justifyContent: 'center',
         alignItems : 'center'
@@ -129,7 +127,7 @@ const styles= StyleSheet.create({
 
     addresscontainer :{
 
-        marginTop : '20%',
+        marginTop : 60,
         width:'100%',
         justifyContent: 'center',
         alignItems : 'center'
@@ -147,7 +145,7 @@ const styles= StyleSheet.create({
         elevation:1,
         textAlign:'center',
         marginHorizontal : '25%',
-        marginTop : '5%'
+        marginTop : 15
     },
 
     numberinputcontainer : {
@@ -161,7 +159,7 @@ const styles= StyleSheet.create({
         elevation:1,
         textAlign:'center',
         marginHorizontal : '20%',
-        marginTop : '5%'
+        marginTop : 15
     },
 
     addressinputcontainer : {
@@ -175,7 +173,7 @@ const styles= StyleSheet.create({
         elevation:1,
         textAlign:'center',
         marginHorizontal : '15%',
-        marginTop : '5%'
+        marginTop : 15
     },
 
     text :{
@@ -186,7 +184,7 @@ const styles= StyleSheet.create({
     },
 
     buttoncontainer :{
-        marginTop : '10%',
+        marginTop : 25,
         width:'100%',
         justifyContent:'center',
         alignItems:'center'

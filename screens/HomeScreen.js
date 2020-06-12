@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
 import {Platform,StyleSheet,View,Text} from 'react-native';
 import Colors from '../constants/Colors';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AddSubtractItemsBar from '../components/AddSubtractItemsBar';
 import ItemsDisplay from '../components/ItemsDisplay';

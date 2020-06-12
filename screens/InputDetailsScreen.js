@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import {StyleSheet,View,Text,TextInput, Button,Keyboard, TouchableWithoutFeedback, ScrollView} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import {createStackNavigator} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import {AddName, AddAddress} from '../redux/actions'
 import store from '../redux/store'
 import {useSelector, useDispatch} from 'react-redux'
@@ -104,7 +102,7 @@ const styles= StyleSheet.create({
     },
     
     namecontainer :{
-        marginTop : '30%',
+        marginTop : 120,
         width:'100%',
         justifyContent: 'center',
         alignItems : 'center'
@@ -113,7 +111,7 @@ const styles= StyleSheet.create({
 
     addresscontainer :{
 
-        marginTop : '30%',
+        marginTop : 100,
         width:'100%',
         justifyContent: 'center',
         alignItems : 'center'
@@ -135,11 +133,11 @@ const styles= StyleSheet.create({
     },
 
     nameinputcontainer : {
-        marginTop : '10%'
+        marginTop : 30
     },
 
     addressinputcontainer : {
-        marginTop : '10%'
+        marginTop : 30
     },
 
     addressinput : {
@@ -164,7 +162,7 @@ const styles= StyleSheet.create({
     },
 
     buttoncontainer :{
-        marginTop : '20%',
+        marginTop : 50,
         width:'100%',
         justifyContent:'center',
         alignItems:'center'

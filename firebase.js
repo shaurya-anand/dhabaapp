@@ -3,14 +3,14 @@ import '@firebase/auth';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBtgUFlPlGCZR8IT-vEHtSbWCaDgehiLrc",
-    authDomain: "himachali-dhaba.firebaseapp.com",
-    databaseURL: "https://himachali-dhaba.firebaseio.com",
-    projectId: "himachali-dhaba",
-    storageBucket: "himachali-dhaba.appspot.com",
-    messagingSenderId: "79094582859",
-    appId: "1:79094582859:web:8bc44c57853191615647ce",
-    measurementId: "G-2TD1KJWDY3"
+    apiKey: "AIzaSyDnT23CRQofcdlUhgo8Qu5Dkr_EbyiQrH4",
+    authDomain: "himachali-dhaba-2dff3.firebaseapp.com",
+    databaseURL: "https://himachali-dhaba-2dff3.firebaseio.com",
+    projectId: "himachali-dhaba-2dff3",
+    storageBucket: "himachali-dhaba-2dff3.appspot.com",
+    messagingSenderId: "77590120835",
+    appId: "1:77590120835:web:6415cfd2446c7caeec8eb6",
+    measurementId: "G-B0YY0F18EG"
 };
 
 firebase.initializeApp(firebaseConfig);

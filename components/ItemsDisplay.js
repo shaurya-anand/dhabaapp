@@ -56,33 +56,33 @@ switch( String(item.category)[0] ) {
 const [isLoading, setLoading] = useState(true);
 const [isLoading2, setLoading2] = useState(true);
 const [data, setData] = useState([]);
+const [filteredData, setFilteredData] = useState([]);
 
 
-useEffect(() => {
+useEffect( () => {
 
   try {
   
-    return db.collection('storeitems').where('available', '==', true).orderBy('category', 'asc').onSnapshot(querysnapshot => {
+    return db.collection('store').onSnapshot(querysnapshot => {
 
       if (querysnapshot.empty) {
-        setLoading2(false);
+        setLoading2(false)
       }
 
-      const items = [];
-        querysnapshot.forEach(doc => {
-        const { id, name, price, category, available} = doc.data();
-        items.push({id, name, price, category, available});
-
-                                  });
+      querysnapshot.forEach(doc => {
+      const listobject = doc.data()
+      setData(Object.values(listobject))
       
-     setData(items)
-
+     } );
+    
      if(isLoading)
      {
      setLoading(false)
+    
      }
   
   });
+
 }
   
   catch(error) {
@@ -91,6 +91,9 @@ useEffect(() => {
 
 }, []);
 
+useEffect(() => {
+  filter();
+}, [data]);
 
  const ListEmpty = () => {
   if(!isLoading2) {
@@ -102,6 +105,30 @@ useEffect(() => {
   );
   }
 };
+
+const filter = () =>
+{
+  tempdata= []
+  count = 0;
+  for(i=0; i< data.length; i++)
+   {
+     if(data[i].available)
+     {
+     tempdata.push(data[i])
+     }
+
+     if(i>0)
+     {
+     count = count+1
+     }
+
+    }
+  setFilteredData(tempdata)
+  if(count!=0)
+  {
+  setLoading2(false)
+  }
+ }
 
    
     return(
@@ -118,8 +145,8 @@ useEffect(() => {
             <FlatList 
            contentContainerStyle={{ paddingBottom: 250}}
            keyExtractor={(item) => item.id}
-           data={data}
-           extraData={data}
+           data={filteredData}
+           extraData={filteredData}
            ListEmptyComponent={ListEmpty()}
            renderItem = { ({item}) =>
               (
@@ -166,7 +193,7 @@ const styles= StyleSheet.create({
       marginLeft : 10,
       fontFamily : 'serif',
       fontSize : 16,
-      color : '#069F5D',
+      color : '#136D46',
       fontWeight : 'bold'
       },
     
