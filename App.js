@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React,{useState, useEffect} from 'react';
-import { StyleSheet, Text, View ,InteractionManager} from 'react-native';
+import { StyleSheet, Text, View ,InteractionManager, Platform} from 'react-native';
 import TopMenuBar from './components/TopMenuBar';
 import BottomBar from './components/BottomBar';
 import InputDetailsScreen from './screens/InputDetailsScreen';

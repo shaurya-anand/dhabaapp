@@ -10,6 +10,8 @@ import {update_location_to_true, update_location_to_false, clear_cart} from '../
 import { getPreciseDistance} from 'geolib';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-community/async-storage';
+import firebase from '../firebase'
+import {db} from'../firebase'
 
 
 
@@ -19,11 +21,30 @@ function CartScreen({navigation}){
   var cart = useSelector(state => state.cart)
   var cart_total = useSelector(state => state.cart_total)
   var phone_number = useSelector(state => state.phone_number)
+  var name = useSelector(state => state.name)
+  var address = useSelector(state => state.address)
   const locationavailable = useSelector(state => state.locationavailable)
   const dispatch = useDispatch()
   var dis = 6000
 
   const [isInternetReachable, setIsInternetReachable] = useState(null)
+  const [authNumber, setAuthNumber] = useState('')
+
+  const readData = async () => {
+    try {
+      const Number = await AsyncStorage.getItem('storeAuthNumber')
+  
+      if (Number !== null) {
+       setAuthNumber(Number)
+      }
+    } catch (e) {
+        alert('Error fetching auth number from local storage')
+    }
+  }
+  
+  useEffect(() => {
+    readData()
+  }, [])
 
   useEffect(() => {
     (async () => {
@@ -93,8 +114,27 @@ function CartScreen({navigation}){
            [  
             { text: 'No', onPress: () => {},  style: 'cancel',  },  
             { text: 'Yes', onPress: () => { 
-                                           saveData()
-                                           navigation.reset({ index: 0, routes: [{ name: 'OrderConfirmedScreen' }], });
+
+              try{
+                let setDoc = db.collection('orders').add({
+
+                   name : name,
+                   phone_number : phone_number,
+                   address : address,
+                   cart : cart,
+                   cart_total : cart_total,
+                   created: firebase.firestore.FieldValue.serverTimestamp(),
+                   auth_number : authNumber
+
+                  });
+
+                saveData()
+                navigation.reset({ index: 0, routes: [{ name: 'OrderConfirmedScreen' }], });
+                }
+              
+                catch(e) {
+                  alert('Unable to place order')
+                }
                                           
                                           }
             },  
