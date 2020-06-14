@@ -9,10 +9,9 @@ function LogoutScreen({navigation}){
     const readData = async () => {
         try {
           await AsyncStorage.setItem('storeIsLoggedIn', 'false')
-          alert('Logged Out Successfully')
         } 
         catch (e) {
-          alert('Error. Kindly restart app to try again.')
+          alert('Error logging out. Kindly restart app and try again.')
         }
       }
       

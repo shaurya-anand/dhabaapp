@@ -101,6 +101,7 @@ useEffect(() => {
     //View to show when list is empty
     <View style={styles.EmptyContainer}>
       <Text style = {styles.storeClosedText}>    Abhi nahi !    </Text>
+      <Text style = {styles.storeTimingText}>    9 AM - 10 PM    </Text>
     </View>
   );
   }
@@ -239,6 +240,7 @@ const styles= StyleSheet.create({
       justifyContent: 'center',
       alignItems : 'center',
       flex: 1,
+      marginTop : '50%',
     },
 
     spinner : {
@@ -250,15 +252,23 @@ const styles= StyleSheet.create({
    storeClosedText : { 
       textAlign: 'center',
       color : 'white',
-      marginTop : '50%', 
       fontSize : 18,
       fontFamily : 'Roboto',
       fontWeight :'bold',
       backgroundColor : Colors.primary,
-      padding : 10,
+      padding : 1,
       borderRadius : 15
       
-   }
+   },
+   storeTimingText : { 
+    textAlign: 'center',
+    color : 'black',
+    fontSize : 18,
+    fontFamily : 'Roboto',
+    fontWeight :'bold',
+    marginTop : 5
+    
+ }
 });
 
 export default ItemsDisplay;
