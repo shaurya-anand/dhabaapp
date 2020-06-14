@@ -52,7 +52,7 @@ const styles= StyleSheet.create({
         width:'100%',
         textAlign :'center',
         fontFamily: 'Roboto',
-        fontSize:40,
+        fontSize:38,
         fontWeight: 'bold',
         color: Colors.primary,
         backgroundColor: 'white',

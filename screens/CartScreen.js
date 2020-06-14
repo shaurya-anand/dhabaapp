@@ -86,6 +86,7 @@ function CartScreen({navigation}){
   const saveData = async () => {
     try {
       await AsyncStorage.setItem('storeOrder', JSON.stringify(cart))
+      await AsyncStorage.setItem('storeTotal', JSON.stringify(cart_total))
     } catch (e) {
     alert('Unable to store locally for order history')
     }

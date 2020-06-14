@@ -8,11 +8,14 @@ import { Entypo } from '@expo/vector-icons';
 function OrderHistoryScreen({navigation}) {
 
     const[prevOrder, setPrevOrder] = useState([])
+    const[prevTotal, setPrevTotal] = useState('')
 
     const readData = async () => {
         try {
           const order = await AsyncStorage.getItem('storeOrder')
+          const orderTotal = await AsyncStorage.getItem('storeTotal')
           setPrevOrder(JSON.parse(order))
+          setPrevTotal(orderTotal)
           if(order == null)
           {
             alert('No previous order found')
@@ -91,17 +94,18 @@ function OrderHistoryScreen({navigation}) {
                          
             
               ) } />
- 
+    <Text style ={styles.totalText}> Total ₹ {prevTotal} </Text>
     </View>
+
 
     <View style = {styles.helpContainer}>
             <Entypo name="old-phone" size={24} color="black" />
-            <Text style = { styles.dhabaContactText}> Contact Dhaba</Text>
+            <Text style = { styles.dhabaContactText}> Contact Dhaba </Text>
             <Text style = { styles.dhabaNumberText} selectable={true} selectionColor={Colors.secondary}> 9958889933 | 9205011408 </Text>
-{/*  
-            <Text style = { styles.appContactText}> Report app error </Text>
-            <Text style = { styles.appEmailText}> himachalidhaba@gmail.com </Text> */}
-      
+      <Text selectable={true} selectionColor={Colors.secondary}>
+            <Text style = { styles.appContactText} selectable={false}> Please report app errors at </Text>
+            <Text style = { styles.appEmailText} selectable={true} selectionColor={Colors.secondary}>himachalidhaba@gmail.com </Text>
+      </Text>   
     </View>
         
 
@@ -236,10 +240,18 @@ const styles= StyleSheet.create({
               fontWeight : 'bold'
             },
 
+            totalText : {
+              textAlign : 'center',
+              fontFamily : 'Roboto',
+              fontSize : 16,
+              marginBottom : 3
+        
+            },
+
             helpContainer : {
                 width : '100%',
                 position: 'absolute',
-                bottom: 30,
+                bottom: 8,
                 justifyContent:'center',
                 alignItems : 'center'
                 
@@ -253,9 +265,11 @@ const styles= StyleSheet.create({
 
             appContactText : {
               fontFamily : 'Roboto',
-              fontSize : 16,
+              fontSize : 10,
               fontWeight : 'bold',
-              marginTop : 5
+              marginTop : 5,
+              color : 'red',
+          
               
             },
 
@@ -263,14 +277,15 @@ const styles= StyleSheet.create({
               fontFamily : 'Roboto',
               fontSize : 18,
               fontWeight : 'bold',
-              color : 'red'
+              color : 'red',
+              marginBottom  : 5
               },
   
           appEmailText : {
                 fontFamily : 'Roboto',
-                fontSize : 16,
+                fontSize : 10,
                 fontWeight : 'bold',
-                color : 'gray'
+                color : 'red'
               }
      
 
