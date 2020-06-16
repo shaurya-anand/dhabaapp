@@ -3,12 +3,17 @@ import {StyleSheet,View,Text, Image} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import AsyncStorage from '@react-native-community/async-storage';
+import firebase from '../firebase'
 
 function LogoutScreen({navigation}){
 
     const readData = async () => {
         try {
-          await AsyncStorage.setItem('storeIsLoggedIn', 'false')
+          
+          setTimeout(async function(){
+              firebase.auth().signOut()
+              await AsyncStorage.setItem('storeIsLoggedIn', 'false') }, 1000); 
+          
         } 
         catch (e) {
           alert('Error logging out. Kindly restart app and try again.')

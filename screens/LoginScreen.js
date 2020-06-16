@@ -27,11 +27,12 @@ function LoginScreen({navigation}){
         setCode(inputText.replace(/[^0-9]/g, ''));
      }; 
 
-    const saveData = async () => {
+    const saveData = async (phoneNumber, uid) => {
         try {
           await AsyncStorage.setItem('storeNumber', phoneNumber)
           await AsyncStorage.setItem('storeAuthNumber', '+91'+ phoneNumber)
           await AsyncStorage.setItem('storeIsLoggedIn', 'true')
+          await AsyncStorage.setItem('storeUid', uid)
           
         } catch (e) {
         alert('Unable to store locally for future use')
@@ -75,7 +76,7 @@ function LoginScreen({navigation}){
           .signInWithCredential(credential)
           .then((result) => {
             // Do something with the results here
-          saveData(phoneNumber);
+          saveData(phoneNumber, result.user.uid)
           navigation.replace('InputDetailsScreen');
 
           });
