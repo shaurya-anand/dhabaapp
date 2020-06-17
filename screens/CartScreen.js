@@ -30,6 +30,8 @@ function CartScreen({navigation}){
   const [isInternetReachable, setIsInternetReachable] = useState(null)
   const [authNumber, setAuthNumber] = useState('')
 
+  const[statsData, setStatsData]= useState([])
+
   const readData = async () => {
     try {
       const Number = await AsyncStorage.getItem('storeAuthNumber')
@@ -45,6 +47,35 @@ function CartScreen({navigation}){
   useEffect(() => {
     readData()
   }, [])
+
+  useEffect( () => {
+
+    try {
+    
+      return db.collection('stats').onSnapshot(querysnapshot => {
+  
+        var statsData = []
+  
+        querysnapshot.forEach(doc => {
+        
+        const listobject = doc.data()
+        statsData.push(doc.data());
+        
+       });
+  
+       setStatsData(statsData)
+    
+    });
+  
+  }
+
+  catch(error)
+  {
+
+  }
+  
+  }, []);
+
 
   useEffect(() => {
     (async () => {
@@ -130,7 +161,18 @@ function CartScreen({navigation}){
                   });
 
                 saveData()
+
+                let setStat = db.collection('stats').doc('statistics').set(
+                  {
+                    monthsTotal : statsData[0].monthsTotal + cart_total,
+                    ordersToday : statsData[0].ordersToday + 1,
+                    todaysTotal : statsData[0].todaysTotal + cart_total,
+                  }    
+                  );
+
                 navigation.reset({ index: 0, routes: [{ name: 'OrderConfirmedScreen' }], });
+
+
                 }
               
                 catch(e) {
