@@ -77,6 +77,10 @@ function InputDetailsScreen({navigation}){
         <TextInput style={styles.addressinput} onChangeText={addressInputHandler}
                 value={enteredAddress}/>
         </View>
+
+        <View style={styles.privacyPolicyContainer}>
+            <Text style={styles.privacyText} onPress={() => navigation.navigate('PrivacyPolicyScreen') }> Privacy Policy </Text>
+        </View>
         
         <View style={styles.buttoncontainer}>
         <MaterialCommunityIcons.Button name='arrow-right-bold-circle-outline' size={60} color='white' backgroundColor={Colors.primary} onPress={() => onClickHandler() }/>
@@ -162,10 +166,23 @@ const styles= StyleSheet.create({
     },
 
     buttoncontainer :{
-        marginTop : 50,
+        marginTop : 15,
         width:'100%',
         justifyContent:'center',
         alignItems:'center'
+    },
+
+    privacyPolicyContainer :{
+        marginTop : 30,
+        width:'100%',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+
+    privacyText : {
+        color : 'white',
+        fontFamily : 'Roboto',
+        
     }
 
 
