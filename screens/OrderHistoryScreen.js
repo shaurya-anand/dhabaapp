@@ -104,7 +104,7 @@ function OrderHistoryScreen({navigation}) {
             <Text style = { styles.dhabaNumberText} selectable={true} selectionColor={Colors.secondary}> 9958889933 | 9205011408 </Text>
       <Text selectable={true} selectionColor={Colors.secondary}>
             <Text style = { styles.appContactText} selectable={false}> Please report app errors at </Text>
-            <Text style = { styles.appEmailText} selectable={true} selectionColor={Colors.secondary}>himachalidhaba@gmail.com </Text>
+            <Text style = { styles.appEmailText} selectable={true} selectionColor={Colors.secondary}>dhabahimachali@gmail.com </Text>
       </Text>   
     </View>
         
